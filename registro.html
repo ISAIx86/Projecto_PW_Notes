@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de usuarios</title>
+    <link rel="stylesheet" href="css/registro_styles.css">
+    
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h2>Crear Cuenta</h2>
+        </div>
+        <form class="form" id="form">
+            <div class="form-control">
+                <label for="Nombres">Nombres:</label>
+                <input type="text" id="txt_nombres" name="Nombres">
+                <i class="fas fa-check-circle"></i>
+                <i class="fas fa-exclamation-circle"></i>
+                <small>Error</small>
+            </div>
+            <div class="form-control">
+                <label for="Apellidos">Apellidos:</label>
+                <input type="text" id="txt_apellidos" name="Apellidos">
+                <i class="fas fa-check-circle"></i>
+                <i class="fas fa-exclamation-circle"></i>
+                <small>Error</small>
+            </div>
+            <div class="form-control">
+                <label>Fecha de nacimiento:</label>
+            </div>
+            <div class="form-control">
+                <label for="DiaNac">Día:</label>
+                <input type="number" id="nbr_dia" name="DiaNac">
+                <i class="fas fa-check-circle"></i>
+                <i class="fas fa-exclamation-circle"></i>
+                <small>Error</small>
+            </div>
+            <div class="form-control">
+                <label for="MesNac">Mes:</label>
+                <select name="MesNac" id="slt_mes">
+                    <option disabled selected value> Seleccione un mes </option>
+                    <option value="1">Enero</option>
+                    <option value="2">Febrero</option>
+                    <option value="3">Marzo</option>
+                    <option value="4">Abril</option>
+                    <option value="5">Mayo</option>
+                    <option value="6">Junio</option>
+                    <option value="7">Julio</option>
+                    <option value="8">Agosto</option>
+                    <option value="9">Septiembre</option>
+                    <option value="10">Octubre</option>
+                    <option value="11">Noviembre</option>
+                    <option value="12">Diciembre</option>
+                </select>
+                <i class="fas fa-check-circle"></i>
+                <i class="fas fa-exclamation-circle"></i>
+                <small>Error</small>
+            </div>
+            <div class="form-control">
+                <label for="AñoNac">Año:</label>
+                <input type="number" id="nbr_año" name="AñoNac">
+                <i class="fas fa-check-circle"></i>
+                <i class="fas fa-exclamation-circle"></i>
+                <small>Error</small>
+            </div>
+            <div class="form-control">
+                <label for="CorreoE">Correo electrónico:</label>
+                <input type="email" id="eml_correoe" name="CorreoE">
+                <i class="fas fa-check-circle"></i>
+                <i class="fas fa-exclamation-circle"></i>
+                <small>Error</small>
+            </div>
+            <div class="form-control">
+                <label for="FotoPerfil">Foto de perfil:</label>
+                <input type="file" id="fle_fotoperfil" name="FotoPerfil">
+            </div>
+            <div class="form-control">
+                <label for="Username">Usuario:</label>
+                <input type="text" id="txt_username" name="Username">
+                <i class="fas fa-check-circle"></i>
+                <i class="fas fa-exclamation-circle"></i>
+                <small>Error</small>
+            </div>
+            <div class="form-control">
+                <label for="Contraseña">Contraseña:</label>
+                <input type="password" id="psw_password" name="Contraseña">
+                <i class="fas fa-check-circle"></i>
+                <i class="fas fa-exclamation-circle"></i>
+                <small>Error</small>
+            </div>
+            <div class="form-control">
+                <label for="ConfirmContra">Confirmar contraseña:</label>
+                <input type="password" id="psw_confpassword" name="ConfirmContra">
+                <i class="fas fa-check-circle"></i>
+                <i class="fas fa-exclamation-circle"></i>
+                <small>Error</small>
+            </div>
+            <button>Submit</button>
+        </form>
+    </div>
+    <script src = "javascript/registro.js"></script>
+</body>
+</html>

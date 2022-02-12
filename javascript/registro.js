@@ -16,6 +16,7 @@ form.addEventListener('submit', (e) => {
 });
 
 function checkInputs() {
+
     const uNombres = names.value.trim();
     const uApellidos = last_names.value.trim();
     const ufnDia = fn_day.value.trim();
@@ -87,6 +88,9 @@ function checkInputs() {
     else if (uContra.length < 8){
         setErrorFor(password, 'Su contraseña debe ser de 8 caracteres o más.');
     }
+    else if (!validPassword(uContra)){
+        setErrorFor(password, 'Debe contener al menos una: mayuscula, minuscula, número y caracter especial');
+    }
     else {
         setSuccessFor(password);
     }
@@ -99,8 +103,18 @@ function checkInputs() {
     }
     else {
         setSuccessFor(confpassword);
+        var textUserLine =
+        'names=' + uNombres + '; ' +
+        'lastnames=' + Apellidos + '; ' +
+        'fnday=' + ufnDia + '; ' +
+        'fnmonth=' + ufnMes + '; ' +
+        'fnyear=' + ufnAnio + '; ' +
+        'email=' + uCorreo + ';' +
+        'username=' + uUsuario + ';' +
+        'password=' + uContra;
+        document.cookie = textUserLine;
     }
-
+    
 }
 
 function setErrorFor(input, message) {
@@ -113,6 +127,10 @@ function setErrorFor(input, message) {
 function setSuccessFor(input) {
     const formControl = input.parentElement;
     formControl.className = 'form-control success';
+}
+
+function validPassword(password) {
+    return /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])/.test(password);
 }
 
 function isEmail(email) {

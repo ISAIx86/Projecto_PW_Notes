@@ -5,17 +5,23 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="css/registro_styles.css">
 </head>
 <body>
-    <div>
-        <form>
-            <label for="CorreoE">Correo electrónico:</label>
-            <input type="email" id="eml_correoe" name="CorreoE">
-            <br/>
-            <label for="Contraseña">Contraseña</label>
-            <input type="password" id="psw_contra" name="Contraseña">
-            <br/>
-            <input type="submit" value="Iniciar sesión">
+    <div class="container">
+        <div class="header">
+            <h2>Iniciar sesión</h2>
+        </div>
+        <form class="form" id="form">
+            <div class="form-control">
+                <input type="email" id="eml_login" name="CorreoE" placeholder="Correo electrónico">
+                <small>Error</small>
+            </div>
+            <div class="form-control">
+                <input type="password" id="psw_login" name="Contra" placeholder="Contraseña">
+                <small>Error</small>
+            </div>
+            <button>Iniciar sesión</button>
         </form>
     </div>
 </body>

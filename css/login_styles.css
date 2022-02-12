@@ -1,0 +1,105 @@
+body {
+    margin: 0;
+    padding: 0;
+    background: url(cellular-address-book-point-annotation.jpg);
+    background-size: cover;
+    background-position: center;
+    font-family: sans-serif;
+}
+
+.container {
+    width: 320px;
+    height: 420px;
+    background: #000;
+    color: #ffff;
+    top: 50%;
+    left: 50%;
+    position: absolute;
+    transform: translate(-50%,-50%);
+    box-sizing: border-box;
+    padding: 70px 30px;
+}
+
+.avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    position: absolute;
+    top: -50px;
+    left: calc(50% - 50px);
+}
+
+.header h2 {
+    margin: 0;
+    padding: 0 0 20px;
+    text-align: center;
+    font-size: 22px;
+}
+
+.form-control {
+    margin-bottom: 1px;
+    padding-bottom: 10px;
+    position: relative;
+}
+
+.form-control input {
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+.form-control input[type="email"], input[type="password"] {
+    border: none;
+    border-bottom: 1px solid #fff;
+    background: transparent;
+    outline: none;
+    height: 40px;
+    color: #fff;
+    font-size: 16px;
+}
+
+.form-control input[type="submit"] {
+    border: none;
+    outline: none;
+    height: 40px;
+    background: #11327a;
+    color: #fff;
+    font-size: 18px;
+    border-radius: 20px;
+}
+
+.form-control input[type="submit"]:hover {
+    background: #1b4bb3;
+    cursor: pointer;
+}
+
+.container a {
+    text-decoration: none;
+    font-size: 12;
+    line-height: 20px;
+    color: #627bb1;
+}
+
+.container a:hover {
+    cursor: pointer;
+    color: #9fb1d8;
+}
+
+.form-control.success input {
+    border: 2px solid #1e53c5;
+}
+
+.form-control.error input {
+    border: 2px solid #be2211;
+}
+
+.form-control small {
+    visibility: hidden;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+
+.form-control.error small {
+    color: #be2211;
+    visibility: visible;
+}

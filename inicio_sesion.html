@@ -5,14 +5,17 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="css/registro_styles.css">
+    <link rel="stylesheet" href="css/login_styles.css">
 </head>
 <body>
     <div class="container">
+
+        <img src="img/avatar.png" class="avatar">
         <div class="header">
             <h2>Iniciar sesión</h2>
         </div>
-        <form class="form" id="form">
+        
+        <form id="form">
             <div class="form-control">
                 <input type="email" id="eml_login" name="CorreoE" placeholder="Correo electrónico">
                 <small>Error</small>
@@ -21,7 +24,11 @@
                 <input type="password" id="psw_login" name="Contra" placeholder="Contraseña">
                 <small>Error</small>
             </div>
-            <button>Iniciar sesión</button>
+            <div class="form-control">
+                <input type="submit" value="Iniciar sesión">
+            </div>
+            <a href="#">Olvidé mi contraseña</a><br/>
+            <a href="registro.html">Crear una cuenta</a>
         </form>
     </div>
 </body>

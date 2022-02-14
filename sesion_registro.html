@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QuickNotes</title>
+    <link rel="stylesheet" href="css/sesion_registro.css">
+    <script src="javascript\jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <div class="hero">
+        <div class="form-box">
+            <div class="button-box">
+                <div id="btn"></div>
+                <button id="btn_login" type="button" class="toggle-btn" onclick="login()">Log In</button>
+                <button id="btn_signup" type="button" class="toggle-btn" onclick="signup()">Sign Up</button>
+            </div>
+            <form id="log_in" class="input-group">
+                <input type="email" class="input-field" placeholder="Correo electrónico">
+                <input type="password" class="input-field" placeholder="Contraseña">
+                <input type="checkbox" class="check-box"><span>Recordar contraseña.</span>
+                <input type="submit" class="submit-btn" value="Iniciar sesión">
+            </form>
+            <form id="sign_up" class="input-group">
+                <input type="text" class="input-field" placeholder="Nombre de usuario">
+                <input type="email" class="input-field" placeholder="Correo electrónico">
+                <input type="password" class="input-field" placeholder="Contraseña">
+                <input type="password" class="input-field" placeholder="Confirmar contraseña">
+                <input type="checkbox" class="check-box"><span>Acepto los términos de uso y condiciones</span>
+                <input type="submit" class="submit-btn" value="Registrarme">
+            </form>
+        </div>
+    </div>
+    <script>
+        var log = document.getElementById("log_in");
+        var sign = document.getElementById("sign_up");
+        var button = document.getElementById("btn");
+        var logbtn = document.getElementById("btn_login");
+        var signbtn = document.getElementById("btn_signup");
+
+        function activeLogInTabs() {
+            let n = 0;
+            logbtn.style.color = "#fff";
+            signbtn.style.color = "#000";
+            $('#log_in input').each(function() {
+                $(this.attr('tabindex', n));
+            });
+            $('#sign_up input').each(function() {
+                $(this.attr('tabindex', -1));
+            });
+        }
+
+        function activeSignUpTabs() {
+            let n = 0;
+            logbtn.style.color = "#000";
+            signbtn.style.color = "#fff";
+            $("#sign_up input").each(function() {
+                $(this.attr('tabindex', n));
+            });
+            $("#log_in input").each(function() {
+                $(this.attr('tabindex', -1));
+            });
+        }
+
+        activeLogInTabs();
+
+        function signup() {
+            log.style.left = "-400px";
+            sign.style.left = "50px";
+            button.style.left = "110px";
+            activeSignUpTabs();
+            
+        }
+
+        function login() {
+            log.style.left = "50px";
+            sign.style.left = "450px";
+            button.style.left = "0px";
+            activeLogInTabs();
+        }
+        
+
+    </script>
+</body>
+</html>

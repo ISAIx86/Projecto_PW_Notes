@@ -1,3 +1,4 @@
+var num = 0;
 const form = document.getElementById('form');
 const names = document.getElementById('txt_nombres');
 const last_names = document.getElementById('txt_apellidos');
@@ -10,13 +11,17 @@ const username = document.getElementById('txt_username');
 const password = document.getElementById('psw_password');
 const confpassword = document.getElementById('psw_confpassword');
 
+document.addEventListener("DOMContentLoaded", function() { 
+    num = localStorage.getItem("cant");
+    if (num == null) num = 0;
+});
+
 form.addEventListener('submit', (e) => {
     e.preventDefault();
     checkInputs();
 });
 
 function checkInputs() {
-
     const uNombres = names.value.trim();
     const uApellidos = last_names.value.trim();
     const ufnDia = fn_day.value.trim();
@@ -103,36 +108,35 @@ function checkInputs() {
     }
     else {
         setSuccessFor(confpassword);
-        var textUserLine =
-        'names=' + uNombres + '; ' +
-        'lastnames=' + Apellidos + '; ' +
-        'fnday=' + ufnDia + '; ' +
-        'fnmonth=' + ufnMes + '; ' +
-        'fnyear=' + ufnAnio + '; ' +
-        'email=' + uCorreo + ';' +
-        'username=' + uUsuario + ';' +
-        'password=' + uContra;
-        document.cookie = textUserLine;
+        let nuevo_Usuario = new Usuario(
+            uNombres,
+            uApellidos,
+            ufnDia + '/' + ufnMes + '/' + ufnAnio,
+            uCorreo,
+            uUsuario,
+            uContra
+        );
+        addUser(nuevo_Usuario);
+        emptyFields();
+        alert('Usuario registrado con éxito.');
     }
-    
 }
 
-function setErrorFor(input, message) {
-    const formControl = input.parentElement;
-    const small = formControl.querySelector('small');
-    small.innerText = message;
-    formControl.className='form-control error';
+function addUser(user) {
+    let index = 'usr' + num;
+    localStorage.setItem(index, user.stringify());
+    num++;
+    localStorage.setItem("cant", num);
 }
 
-function setSuccessFor(input) {
-    const formControl = input.parentElement;
-    formControl.className = 'form-control success';
-}
-
-function validPassword(password) {
-    return /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])/.test(password);
-}
-
-function isEmail(email) {
-    return /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1.3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email);
+function emptyFields() {
+    names.value = "";
+    last_names.value = "";
+    fn_day.value = "";
+    fn_month.value = '0';
+    fn_year.value = "";
+    email.value = "";
+    username.value = "";
+    password.value = "";
+    confpassword.value = "";
 }

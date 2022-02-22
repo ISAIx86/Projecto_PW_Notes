@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="css/registro_styles.css">
+    <script src="javascript/lib/jquery-3.6.0.min.js"></script>
     <script src="javascript/models/Validators.js"></script>
     <script src="javascript/models/Usuario.js"></script>
 </head>
@@ -15,15 +16,17 @@
             <h2>Iniciar sesión</h2>
         </div>
         <form class="form" id="login_form">
-            <div class="form-control">
-                <input type="email" id="eml_login" name="CorreoE" placeholder="Correo electrónico">
+            <div class="form-control" estado="vacio">
+                <input type="email" id="eml_login" name="Correo electrónico" placeholder="Correo electrónico">
+                <small>Error</small>
+            </div>
+            <div class="form-control" estado="vacio">
+                <input type="password" id="psw_login" name="Contraseña" placeholder="Contraseña">
                 <small>Error</small>
             </div>
             <div class="form-control">
-                <input type="password" id="psw_login" name="Contra" placeholder="Contraseña">
-                <small>Error</small>
+                <input type="submit" value="Iniciar Sesión">
             </div>
-            <input type="submit" value="Iniciar Sesión">
         </form>
     </div>
     <script src="javascript/inicio.js"></script>

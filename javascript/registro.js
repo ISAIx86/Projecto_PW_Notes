@@ -3,6 +3,7 @@ var num = 0;
 $(document).ready(function() {
 
     num = localStorage.getItem('cant');
+    if (num == null) num = 0;
 
     $('#fl_photoholder').change(function() {
         setCSSFor($(this)[0], 'success');
@@ -248,15 +249,15 @@ function addUser(user) {
 }
 
 function emptyFields() {
-    names.value = "";
-    last_names.value = "";
-    fn_day.value = "";
-    fn_month.value = '0';
-    fn_year.value = "";
-    email.value = "";
-    username.value = "";
-    password.value = "";
-    confpassword.value = "";
+    $('#txt_nombres').val("");
+    $('#txt_nombres').val("");
+    $('#txt_username').val("");
+    $('#nbr_dia').val("");
+    $('#slt_mes').val("");
+    $('#nbr_año').val("");
+    $('#eml_correoe').val("");
+    $('#psw_password').val("");
+    $('psw_confpassword').val("");
 }
 
 function imagePreview() {

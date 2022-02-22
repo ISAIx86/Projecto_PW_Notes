@@ -46,8 +46,11 @@ function noNumbers(input) {
 
 function validDate(day, month, year) {
     let birth = new Date(year, month-1, day);
+    let bd = birth.getDate();
+    let bm = birth.getMonth();
+    let by = birth.getFullYear();
     let today = new Date();
-    if (birth.getFullYear() != year && birth.getMonth() != month-1 && birth.getDate() != day) {
+    if (by != year | bm != month-1 | bd != day) {
         return false;
     }
     else if (birth > today)

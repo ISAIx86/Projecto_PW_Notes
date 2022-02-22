@@ -1,15 +1,40 @@
 var lista_users = [];
-const form = document.getElementById('login_form');
-var email = document.getElementById('eml_login');
-var password = document.getElementById('psw_login');
 
-document.addEventListener("DOMContentLoaded", function() { 
+$(document).ready(function() {
+
     loadUsers();
-});
 
-form.addEventListener('submit', (e) => {
-    e.preventDefault();
-    checkInputs();
+    $('#eml_login').change(function() {
+        debugger;
+        let value = $(this).val();
+        if (value = "") {
+            setCSSFor($(this)[0], 'normal');
+            setStateFor($(this)[0], 'normal');
+        }
+        else {
+            setCSSFor($(this)[0], 'success');
+            setStateFor($(this)[0], 'success');
+        }
+        
+    });
+
+    $('#psw_login').change(function() {
+        debugger;
+        let value = $(this).val();
+        if (value == "") {
+            setCSSFor($(this)[0], 'normal');
+            setStateFor($(this)[0], 'normal');
+        }
+        else {
+            setCSSFor($(this)[0], 'success');
+            setStateFor($(this)[0], 'success');
+        }
+    });
+    
+    $('input[type=submit]').click(function() {
+        checkInputs();
+    });
+
 });
 
 function loadUsers() {
@@ -30,38 +55,34 @@ function loadUsers() {
 }
 
 function checkInputs() {
-    var uEmail = email.value.trim();
-    var uPassword = password.value.trim();
-
-    if (!isEmail(uEmail)) {
-        setErrorFor(email, 'El correo no es válido.');
+    let email = $('#eml_login')[0];
+    let pass = $('#psw_login')[0];
+    if (email.value.trim() == "") {
+        setCSSFor(email, 'error', "Ingrese un correo electrónico")
+        return;
+    }   
+    if (pass.value.trim() == "") {
+        setCSSFor(pass, 'error', "Ingrese la contraseña")
+        return;
     }
-    else {
-        setSuccessFor(email);
-        let login_user = null;
-        lista_users.some(element => {
-            if (element.email === uEmail){
-                login_user = element;
-                return element;
-            }
-        });
-        if (login_user == null) {
-            setErrorFor(email, 'El usuario no existe.');
-        }
-        else {
-            if (uPassword !== login_user.contra) {
-                setErrorFor(password, 'Contraseña incorrecta.');
+    debugger;
+    let found = false;
+    lista_users.some(function(user) {
+        if (user.email == email.value.trim()) {
+            found = true;
+            if (user.contra = pass.value.trim()){
+                alert("El usuario " + email.nombres + " ha iniciado sesión.");
+                
             }
             else {
-                alert('Usuario ' + login_user.nombres + ' ha ingresado.')
-                emptyFields();
+                setCSSFor(pass, 'error', "La contraseña es incorrecta");
             }
         }
-    }
-
+    });
+    if (!found) setCSSFor(email, 'error', "El usuario no existe");
 }
 
 function emptyFields() {
-    email.value = "";
-    password.value = "";
+    $('#eml_login').val("");
+    $('#psw_login').val("");
 }

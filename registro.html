@@ -4,8 +4,9 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registro de usuarios</title>
+    <title>QuickNotes - ¡Registrate!</title>
     <link rel="stylesheet" href="css/registro_styles.css">
+    <script src="javascript/lib/jquery-3.6.0.min.js"></script>
     <script src="javascript/models/Validators.js"></script>
     <script src="javascript/models/Usuario.js"></script>
 </head>
@@ -15,29 +16,33 @@
             <h2>Crear Cuenta</h2>
         </div>
         <form class="form" id="form">
-            <div class="form-control">
-                <input type="text" id="txt_nombres" name="Nombres" placeholder="Nombres">
-                <i class="fas fa-check-circle"></i>
-                <i class="fas fa-exclamation-circle"></i>
+            <h4>Foto de perfil</h2>
+            <div class="form-control" estado="vacio">
+                <img id="frame" width="150" height="130">
+                <input type="file" id="fl_photoholder" name="Foto de Perfil" accept="image/*" style="display:none;"></input>
+                <input type="button" value="Cargar imagen" id="btn_loadphoto">
                 <small>Error</small>
             </div>
-            <div class="form-control">
-                <input type="text" id="txt_apellidos" name="Apellidos" placeholder="Apellidos">
-                <i class="fas fa-check-circle"></i>
-                <i class="fas fa-exclamation-circle"></i>
+            <div class="form-control" estado="vacio">
+                <input type="text" id="txt_nombres" name="Nombres" placeholder="Nombre(s)">
                 <small>Error</small>
             </div>
-            <div class="form-control">
-                Fecha de nacimiento:
-            </div>
-            <div class="form-control">
-                <input type="number" id="nbr_dia" name="DiaNac" placeholder="Día">
-                <i class="fas fa-check-circle"></i>
-                <i class="fas fa-exclamation-circle"></i>
+            <div class="form-control" estado="vacio">
+                <input type="text" id="txt_apellidos" name="Apellidos" placeholder="Apellido(s)">
                 <small>Error</small>
             </div>
-            <div class="form-control">
-                <select name="MesNac" id="slt_mes">
+            <div class="form-control" estado="vacio">
+                <input type="text" id="txt_username" name="Nombre de usuario" placeholder="Nombre de usuario">
+                <small>Error</small>
+            </div>
+            <div class="form-control" estado="vacio">
+                <h4>Fecha de nacimiento</h4>
+                <input type="number" id="nbr_dia" name="Dia de nacimiento" placeholder="Día">
+                <small>Error</small>
+            </div>
+            <div class="form-control" estado="vacio">
+                <input name="Mes de nacimiento" style="display:none">
+                <select name="Mes de nacimiento" id="slt_mes">
                     <option disabled selected value>Mes</option>
                     <option value="1">Enero</option>
                     <option value="2">Febrero</option>
@@ -52,45 +57,28 @@
                     <option value="11">Noviembre</option>
                     <option value="12">Diciembre</option>
                 </select>
-                <i class="fas fa-check-circle"></i>
-                <i class="fas fa-exclamation-circle"></i>
                 <small>Error</small>
             </div>
-            <div class="form-control">
-                <input type="number" id="nbr_año" name="AñoNac" placeholder="Año">
-                <i class="fas fa-check-circle"></i>
-                <i class="fas fa-exclamation-circle"></i>
+            <div class="form-control" estado="vacio">
+                <input type="number" id="nbr_año" name="Año de nacimiento" placeholder="Año">
                 <small>Error</small>
             </div>
-            <div class="form-control">
-                <input type="email" id="eml_correoe" name="CorreoE" placeholder="Correo electrónico">
-                <i class="fas fa-check-circle"></i>
-                <i class="fas fa-exclamation-circle"></i>
+            <div class="form-control" estado="vacio">
+                <input type="email" id="eml_correoe" name="Correo electrónico" placeholder="Correo electrónico">
                 <small>Error</small>
             </div>
-            <div class="form-control">
-                <label for="FotoPerfil">Foto de perfil:</label>
-                <input type="file" id="fle_fotoperfil" name="FotoPerfil">
-            </div>
-            <div class="form-control">
-                <input type="text" id="txt_username" name="Username" placeholder="Nombre de usuario">
-                <i class="fas fa-check-circle"></i>
-                <i class="fas fa-exclamation-circle"></i>
-                <small>Error</small>
-            </div>
-            <div class="form-control">
+            <div class="form-control" estado="vacio">
                 <input type="password" id="psw_password" name="Contraseña" placeholder="Contraseña" minlength="8">
-                <i class="fas fa-check-circle"></i>
-                <i class="fas fa-exclamation-circle"></i>
                 <small>Error</small>
             </div>
-            <div class="form-control">
-                <input type="password" id="psw_confpassword" name="ConfirmContra" placeholder="Confirmar contraseña">
-                <i class="fas fa-check-circle"></i>
-                <i class="fas fa-exclamation-circle"></i>
+            <div class="form-control" estado="vacio">
+                <input type="password" id="psw_confpassword" name="Confirmar contraseña" placeholder="Confirmar contraseña">
                 <small>Error</small>
             </div>
-            <input type="submit" value="Registrarme" action="inicio_sesion.html">
+            <div class="form-control" estado="vacio">
+                <input type="submit" value="Registrarme" action="inicio_sesion.html">
+                <small>Error</small>
+            </div>
         </form>
     </div>
     <script src = "javascript/registro.js"></script>

@@ -1,130 +1,248 @@
 var num = 0;
-const form = document.getElementById('form');
-const names = document.getElementById('txt_nombres');
-const last_names = document.getElementById('txt_apellidos');
-const fn_day = document.getElementById('nbr_dia');
-const fn_month = document.getElementById('slt_mes');
-const fn_year = document.getElementById('nbr_año');
-const email = document.getElementById('eml_correoe');
-const profimg = document.getElementById('fle_fotoperfil');
-const username = document.getElementById('txt_username');
-const password = document.getElementById('psw_password');
-const confpassword = document.getElementById('psw_confpassword');
 
-document.addEventListener("DOMContentLoaded", function() { 
-    num = localStorage.getItem("cant");
-    if (num == null) num = 0;
+$(document).ready(function() {
+
+    num = localStorage.getItem('cant');
+
+    $('#fl_photoholder').change(function() {
+        setCSSFor($(this)[0], 'success');
+        setStateFor($(this)[0], 'success');
+        imagePreview();
+        checkAllCorrect();
+    });
+
+    $('#btn_loadphoto').click(function() {
+        document.getElementById('fl_photoholder').click();
+    });
+
+    $('#txt_nombres').change(function() {
+        let value = $(this).val();
+        if(value == "") {
+            setCSSFor($(this)[0], 'normal');
+            setStateFor($(this)[0], 'normal');
+        }
+        else if (!noNumbers(value)){
+            setCSSFor($(this)[0], 'error', "El Nombre no debe contener números");
+            setStateFor($(this)[0], 'error');
+        }
+        else {
+            setCSSFor($(this)[0], 'success');
+            setStateFor($(this)[0], 'success');
+        }
+        checkAllCorrect();
+    });
+
+    $('#txt_apellidos').change(function() {
+        let value = $(this).val();
+        if(value == "") {
+            setCSSFor($(this)[0], 'normal');
+            setStateFor($(this)[0], 'normal');
+        }
+        else if (!noNumbers(value)) {
+            setCSSFor($(this)[0], 'error', "El Apellido no debe contener números");
+            setStateFor($(this)[0], 'error');
+        }
+        else {
+            setCSSFor($(this)[0], 'success');
+            setStateFor($(this)[0], 'success');
+        }
+        checkAllCorrect();
+    });
+
+    $('#txt_username').change(function() {
+        let value = $(this).val();
+        if(value == "") {
+            setCSSFor($(this)[0], 'normal');
+            setStateFor($(this)[0], 'normal');
+        }
+        else {
+            setCSSFor($(this)[0], 'success');
+            setStateFor($(this)[0], 'success');
+        }
+        checkAllCorrect();
+    });
+
+    $('#nbr_dia').change(function() {
+        let value = $(this).val();
+        if (value == "") {
+            setCSSFor($(this)[0], 'normal');
+            setStateFor($(this)[0], 'normal');
+        }
+        else if (value < 1){
+            $(this).val("1")
+            setCSSFor($(this)[0], 'success');
+            setStateFor($(this)[0], 'success');
+        }
+        else if (value > 31) {
+            $(this).val("31");
+            setCSSFor($(this)[0], 'success');
+            setStateFor($(this)[0], 'success');
+        }
+        else {
+            setCSSFor($(this)[0], 'success');
+            setStateFor($(this)[0], 'success');
+        }
+        checkAllCorrect();
+    })
+
+    $('#slt_mes').change(function() {
+        let value = $(this).val()
+        if (value == 0) {
+            setCSSFor($(this)[0], 'normal');
+            setStateFor($(this)[0], 'normal');
+        }
+        else {
+            setCSSFor($(this)[0], 'success');
+            setStateFor($(this)[0], 'success');
+        }
+        checkAllCorrect();
+    });
+
+    $('#nbr_año').change(function() {
+        let value = $(this).val();
+        if (value == "") {
+            setCSSFor($(this)[0], 'normal');
+            setStateFor($(this)[0], 'normal');
+        }
+        else {
+            setCSSFor($(this)[0], 'success');
+            setStateFor($(this)[0], 'success');
+        }
+        checkAllCorrect();
+    });
+
+    $('#eml_correoe').change(function() {
+        let value = $(this).val();
+        if (value == "") {
+            setCSSFor($(this)[0], 'normal');
+            setStateFor($(this)[0], 'normal');
+        }
+        else if (!validEmail(value)) {
+            setCSSFor($(this)[0], 'error', "Éste correo no tiene formato válido");
+            setStateFor($(this)[0], 'error');
+        }
+        else {
+            setCSSFor($(this)[0], 'success');
+            setStateFor($(this)[0], 'success');
+        }
+        checkAllCorrect();
+    });
+
+    $('#psw_password').change(function() {
+        let value = $(this).val();
+        if (value == "") {
+            setCSSFor($(this)[0], 'normal');
+            setStateFor($(this)[0], 'normal');
+        }
+        else if (!validPassword(value)) {
+            setCSSFor($(this)[0], 'error', "Debe contener al menos: una mayús, una minús, un número y un caractér especial");
+            setStateFor($(this)[0], 'error');
+        }
+        else {
+            setCSSFor($(this)[0], 'success');
+            setStateFor($(this)[0], 'success');
+        }
+        checkAllCorrect();
+    });
+
+    $('#psw_confpassword').change(function() {
+        let value = $(this).val();
+        let password = $('#psw_password').val()
+        if (value == "") {
+            setCSSFor($(this)[0], 'normal');
+            setStateFor($(this)[0], 'normal');
+        }
+        else if (value !== password) {
+            setCSSFor($(this)[0], 'error', "La contraseña no coincide");
+            setStateFor($(this)[0], 'error');
+        }
+        else {
+            setCSSFor($(this)[0], 'success');
+            setStateFor($(this)[0], 'success');
+        }
+        checkAllCorrect();
+    })
+
+    $('[type=submit]').click(function(e){
+        e.preventDefault();
+        if (checkInputs()) {
+            addUser();
+            emptyFields();
+        }
+    })
+
 });
 
-form.addEventListener('submit', (e) => {
-    e.preventDefault();
-    checkInputs();
-});
+function checkAllCorrect() {
+    let divs = Array.from($('#form').children());
+    for (let i = 0; i < divs.length - 1; i++) {
+        if (divs[i].getAttribute("estado") == "novalido") {
+            let input = divs[i].querySelector('input');
+            setCSSFor($('input[type=submit]')[0], 'error', "El campo " + input.getAttribute('name') + " está incorrecto");
+            return false;
+        }
+    }
+    setCSSFor($('input[type=submit]')[0], 'normal');
+    return true;
+}
+
+function checkNoEmpty() {
+    let divs = Array.from($('#form').children());
+    let all_correct = true;
+    for (let i = 0; i < divs.length - 1; i++) {
+        if (divs[i].getAttribute("estado") == "vacio") {
+            let input = divs[i].querySelector('input');
+            setCSSFor(input, 'error', "Llene éste campo.");
+            all_correct = false;
+        }
+    }
+    if (!all_correct) setCSSFor($('input[type=submit]')[0], 'error', "Hay campos vacíos, por favor complete la información");
+    return all_correct;
+}
 
 function checkInputs() {
-    const uNombres = names.value.trim();
-    const uApellidos = last_names.value.trim();
-    const ufnDia = fn_day.value.trim();
-    const ufnMes = fn_month.value.trim();
-    const ufnAnio = fn_year.value.trim();
-    const uCorreo = email.value.trim();
-    const uUsuario = username.value.trim();
-    const uContra = password.value.trim();
-    const uConfContra = confpassword.value.trim();
-
-    if (uNombres === '') {
-        setErrorFor(names, 'Llene el campo de nombre.');
+    if (!checkNoEmpty()) return false;
+    if (!checkAllCorrect()) return false;
+    let in_day = $('#nbr_dia')[0];
+    let in_mon = $('#slt_mes')[0];
+    let in_yea = $('#nbr_año')[0];
+    let fn_day = in_day.value.trim();
+    let fn_mon = in_mon.value.trim();
+    let fn_yea = in_yea.value.trim();
+    if (!validDate(fn_day, fn_mon, fn_yea)) {
+        setCSSFor(in_day, 'error', "");
+        setStateFor(in_day, 'error');
+        setCSSFor(in_mon, 'error', "");
+        setStateFor(in_mon, 'error');
+        setCSSFor(in_yea, 'error', "La fecha "+fn_day+'/'+fn_mon+'/'+fn_yea+" no es válida");
+        setStateFor(in_yea, 'error');
+        setCSSFor($('input[type=submit]')[0], 'error',"La fecha que ingrseó no es válida");
+        in_day.value = "";
+        in_mon.value = "";
+        in_yea.value = "";
+        return false;
     }
-    else {
-        setSuccessFor(names);
-    }
-
-    if (uApellidos === '') {
-        setErrorFor(last_names, 'Llene el campo de apellidos.');
-    }
-    else {
-        setSuccessFor(last_names);
-    }
-
-    if (ufnDia === '') {
-        setErrorFor(fn_day, 'Ingrese un día.');
-    }
-    else if (ufnDia < 1 | ufnDia > 31) {
-        setErrorFor(fn_day, 'El valor es inválido.');
-    }
-    else {
-        setSuccessFor(fn_day);
-    }
-
-    if (ufnMes == 0) {
-        setErrorFor(fn_month, 'Seleccione un mes, boludo.');
-    }
-    else {
-        setSuccessFor(fn_month);
-    }
-
-    if (ufnAnio === ''){
-        setErrorFor(fn_year, 'Ingrese un año.')
-    }
-    else {
-        setSuccessFor(fn_year);
-    }
-
-    if (uCorreo === ''){
-        setErrorFor(email, 'Ingrese su correo, torombolo.');
-    }
-    else if (!isEmail(uCorreo)) {
-        setErrorFor(email, 'El correo no es válido.');
-    }
-    else {
-        setSuccessFor(email);
-    }
-
-    if (uUsuario === '') {
-        setErrorFor(username, 'Ingrese un nombre de usuario, conio!');
-    }
-    else {
-        setSuccessFor(username);
-    }
-
-    if (uContra === '') {
-        setErrorFor(password, 'Ingrese una contraseña!!!');
-    }
-    else if (uContra.length < 8){
-        setErrorFor(password, 'Su contraseña debe ser de 8 caracteres o más.');
-    }
-    else if (!validPassword(uContra)){
-        setErrorFor(password, 'Debe contener al menos una: mayuscula, minuscula, número y caracter especial');
-    }
-    else {
-        setSuccessFor(password);
-    }
-
-    if (uConfContra === '') {
-        setErrorFor(confpassword, 'Confirme su contraseña, no sea boludo!!');
-    }
-    else if (uConfContra !== uContra) {
-        setErrorFor(confpassword, 'La contraseña no coincide.');
-    }
-    else {
-        setSuccessFor(confpassword);
-        let nuevo_Usuario = new Usuario(
-            uNombres,
-            uApellidos,
-            ufnDia + '/' + ufnMes + '/' + ufnAnio,
-            uCorreo,
-            uUsuario,
-            uContra
-        );
-        addUser(nuevo_Usuario);
-        emptyFields();
-        alert('Usuario registrado con éxito.');
-    }
+    return true;
 }
 
 function addUser(user) {
+    debugger;
+    let in_nombres = $('#txt_nombres').val();
+    let in_apellidos = $('#txt_apellidos').val();
+    let in_username = $('#txt_username').val();
+    let in_date = $('#nbr_dia').val() + '/' + $('#slt_mes').val() + '/' + $('#nbr_año').val();
+    let in_email = $('#eml_correoe').val();
+    let in_pass = $('#psw_password').val();
+    let new_user = new Usuario(
+        in_nombres,
+        in_apellidos,
+        in_username,
+        in_date,
+        in_email,
+        in_pass
+    );
     let index = 'usr' + num;
-    localStorage.setItem(index, user.stringify());
+    localStorage.setItem(index, new_user.stringify());
     num++;
     localStorage.setItem("cant", num);
 }
@@ -139,4 +257,9 @@ function emptyFields() {
     username.value = "";
     password.value = "";
     confpassword.value = "";
+}
+
+function imagePreview() {
+    let frame = $('#frame')[0];
+    frame.src=URL.createObjectURL(event.target.files[0]);
 }

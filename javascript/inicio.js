@@ -5,7 +5,6 @@ $(document).ready(function() {
     loadUsers();
 
     $('#eml_login').change(function() {
-        debugger;
         let value = $(this).val();
         if (value = "") {
             setCSSFor($(this)[0], 'normal');
@@ -15,11 +14,9 @@ $(document).ready(function() {
             setCSSFor($(this)[0], 'success');
             setStateFor($(this)[0], 'success');
         }
-        
     });
 
     $('#psw_login').change(function() {
-        debugger;
         let value = $(this).val();
         if (value == "") {
             setCSSFor($(this)[0], 'normal');
@@ -31,7 +28,8 @@ $(document).ready(function() {
         }
     });
     
-    $('input[type=submit]').click(function() {
+    $('input[type=submit]').click(function(e) {
+        e.preventDefault();
         checkInputs();
     });
 
@@ -65,18 +63,14 @@ function checkInputs() {
         setCSSFor(pass, 'error', "Ingrese la contraseña")
         return;
     }
-    debugger;
     let found = false;
     lista_users.some(function(user) {
         if (user.email == email.value.trim()) {
             found = true;
-            if (user.contra = pass.value.trim()){
-                alert("El usuario " + email.nombres + " ha iniciado sesión.");
-                
-            }
-            else {
-                setCSSFor(pass, 'error', "La contraseña es incorrecta");
-            }
+            if (user.contra == pass.value.trim())
+                alert("El usuario " + user.nombres + " ha iniciado sesión.");
+            else 
+                setCSSFor(pass, 'error', "La contraseña es incorrecta");   
         }
     });
     if (!found) setCSSFor(email, 'error', "El usuario no existe");

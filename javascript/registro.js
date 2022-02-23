@@ -135,6 +135,10 @@ $(document).ready(function() {
             setCSSFor($(this)[0], 'normal');
             setStateFor($(this)[0], 'normal');
         }
+        else if (value.length < 8) {
+            setCSSFor($(this)[0], 'error', "La contraseña ser de mínimo 8 caracteres");
+            setStateFor($(this)[0], 'error');
+        }
         else if (!validPassword(value)) {
             setCSSFor($(this)[0], 'error', "Debe contener al menos: una mayús, una minús, un número y un caractér especial");
             setStateFor($(this)[0], 'error');
@@ -226,8 +230,7 @@ function checkInputs() {
     return true;
 }
 
-function addUser(user) {
-    debugger;
+function addUser() {
     let in_nombres = $('#txt_nombres').val();
     let in_apellidos = $('#txt_apellidos').val();
     let in_username = $('#txt_username').val();
@@ -249,15 +252,18 @@ function addUser(user) {
 }
 
 function emptyFields() {
+    let frame = $('#frame')[0];
+    frame.src="";
+    $('#fl_photoholder').val("");
     $('#txt_nombres').val("");
-    $('#txt_nombres').val("");
+    $('#txt_apellidos').val("");
     $('#txt_username').val("");
     $('#nbr_dia').val("");
     $('#slt_mes').val("");
     $('#nbr_año').val("");
     $('#eml_correoe').val("");
     $('#psw_password').val("");
-    $('psw_confpassword').val("");
+    $('#psw_confpassword').val("");
 }
 
 function imagePreview() {

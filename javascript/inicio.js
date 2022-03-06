@@ -1,14 +1,14 @@
-var lista_users = [];
-
 $(document).ready(function() {
-
-    loadUsers();
 
     $('#eml_login').change(function() {
         let value = $(this).val();
-        if (value = "") {
+        if (value == "") {
             setCSSFor($(this)[0], 'normal');
             setStateFor($(this)[0], 'normal');
+        }
+        else if (!validEmail(value)){
+            setCSSFor($(this)[0], 'error', "Éste correo no tiene formato válido");
+            setStateFor($(this)[0], 'error');
         }
         else {
             setCSSFor($(this)[0], 'success');
@@ -22,6 +22,14 @@ $(document).ready(function() {
             setCSSFor($(this)[0], 'normal');
             setStateFor($(this)[0], 'normal');
         }
+        else if (value.length < 8) {
+            setCSSFor($(this)[0], 'error', "La contraseña ser de mínimo 8 caracteres");
+            setStateFor($(this)[0], 'error');
+        }
+        else if (!validPassword(value)) {
+            setCSSFor($(this)[0], 'error', "Debe contener al menos: una mayús, una minús, un número y un caractér especial");
+            setStateFor($(this)[0], 'error');
+        }
         else {
             setCSSFor($(this)[0], 'success');
             setStateFor($(this)[0], 'success');
@@ -30,50 +38,25 @@ $(document).ready(function() {
     
     $('input[type=submit]').click(function(e) {
         e.preventDefault();
-        checkInputs();
+        if(checkInputs()) {
+            alert("Ha iniciado sesión!");
+        }
     });
 
 });
-
-function loadUsers() {
-    let tot = localStorage.getItem("cant");
-    for (let i = 0; i < tot; i++) {
-        let index = "usr" + i;
-        let attrarr = localStorage.getItem(index).split(',');
-        let user = new Usuario(
-            attrarr[0],
-            attrarr[1],
-            attrarr[2],
-            attrarr[3],
-            attrarr[4],
-            attrarr[5]
-        );
-        lista_users.push(user);
-    }
-}
 
 function checkInputs() {
     let email = $('#eml_login')[0];
     let pass = $('#psw_login')[0];
     if (email.value.trim() == "") {
         setCSSFor(email, 'error', "Ingrese un correo electrónico")
-        return;
-    }   
+        return false;
+    }
     if (pass.value.trim() == "") {
         setCSSFor(pass, 'error', "Ingrese la contraseña")
-        return;
+        return false;
     }
-    let found = false;
-    lista_users.some(function(user) {
-        if (user.email == email.value.trim()) {
-            found = true;
-            if (user.contra == pass.value.trim())
-                alert("El usuario " + user.nombres + " ha iniciado sesión.");
-            else 
-                setCSSFor(pass, 'error', "La contraseña es incorrecta");   
-        }
-    });
-    if (!found) setCSSFor(email, 'error', "El usuario no existe");
+    return true;
 }
 
 function emptyFields() {

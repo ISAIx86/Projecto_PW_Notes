@@ -44,22 +44,15 @@ function noNumbers(input) {
     return !/\d/.test(input);
 }
 
-function validDate(day, month, year) {
-    let birth = new Date(year, month-1, day);
-    let bd = birth.getDate();
-    let bm = birth.getMonth();
-    let by = birth.getFullYear();
+function validDate(birth) {
     let today = new Date();
-    if (by != year | bm != month-1 | bd != day) {
-        return false;
-    }
-    else if (birth > today)
+    if (birth >= today)
         return false;
     else return true;
 }
 
 function validPassword(password) {
-    return /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])/.test(password);
+    return /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*()_+|~=`{}\[\]:";'<>?,./-]).{8,}$/.test(password);
 }
 
 function validEmail(email) {

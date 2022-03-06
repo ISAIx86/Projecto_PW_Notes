@@ -1,9 +1,4 @@
-var num = 0;
-
 $(document).ready(function() {
-
-    num = localStorage.getItem('cant');
-    if (num == null) num = 0;
 
     $('#fl_photoholder').change(function() {
         setCSSFor($(this)[0], 'success');
@@ -63,47 +58,17 @@ $(document).ready(function() {
         checkAllCorrect();
     });
 
-    $('#nbr_dia').change(function() {
+    $('#dt_fecnac').change(function() {
         let value = $(this).val();
-        if (value == "") {
-            setCSSFor($(this)[0], 'normal');
-            setStateFor($(this)[0], 'normal');
+        let sep = value.split('-');
+        let fecnac = new Date(sep[0], sep[1] - 1, sep[2]);
+        if (!validDate(fecnac)) {
+            setCSSFor($(this)[0], 'error', 'No debe ser una fecha próxima');
+            setStateFor($(this)[0], 'error');
         }
-        else if (value < 1){
-            $(this).val("1")
-            setCSSFor($(this)[0], 'success');
-            setStateFor($(this)[0], 'success');
-        }
-        else if (value > 31) {
-            $(this).val("31");
-            setCSSFor($(this)[0], 'success');
-            setStateFor($(this)[0], 'success');
-        }
-        else {
-            setCSSFor($(this)[0], 'success');
-            setStateFor($(this)[0], 'success');
-        }
-        checkAllCorrect();
-    })
-
-    $('#slt_mes').change(function() {
-        let value = $(this).val()
-        if (value == 0) {
-            setCSSFor($(this)[0], 'normal');
-            setStateFor($(this)[0], 'normal');
-        }
-        else {
-            setCSSFor($(this)[0], 'success');
-            setStateFor($(this)[0], 'success');
-        }
-        checkAllCorrect();
-    });
-
-    $('#nbr_año').change(function() {
-        let value = $(this).val();
-        if (value == "") {
-            setCSSFor($(this)[0], 'normal');
-            setStateFor($(this)[0], 'normal');
+        else if (isNaN(fecnac)){
+            setCSSFor($(this)[0], 'error', 'La fecha no existe');
+            setStateFor($(this)[0], 'error');
         }
         else {
             setCSSFor($(this)[0], 'success');
@@ -146,6 +111,7 @@ $(document).ready(function() {
         else {
             setCSSFor($(this)[0], 'success');
             setStateFor($(this)[0], 'success');
+            $("#psw_confpassword").trigger("change");
         }
         checkAllCorrect();
     });
@@ -171,8 +137,6 @@ $(document).ready(function() {
     $('[type=submit]').click(function(e){
         e.preventDefault();
         if (checkInputs()) {
-            addUser();
-            emptyFields();
         }
     })
 
@@ -208,47 +172,7 @@ function checkNoEmpty() {
 function checkInputs() {
     if (!checkNoEmpty()) return false;
     if (!checkAllCorrect()) return false;
-    let in_day = $('#nbr_dia')[0];
-    let in_mon = $('#slt_mes')[0];
-    let in_yea = $('#nbr_año')[0];
-    let fn_day = in_day.value.trim();
-    let fn_mon = in_mon.value.trim();
-    let fn_yea = in_yea.value.trim();
-    if (!validDate(fn_day, fn_mon, fn_yea)) {
-        setCSSFor(in_day, 'error', "");
-        setStateFor(in_day, 'error');
-        setCSSFor(in_mon, 'error', "");
-        setStateFor(in_mon, 'error');
-        setCSSFor(in_yea, 'error', "La fecha "+fn_day+'/'+fn_mon+'/'+fn_yea+" no es válida");
-        setStateFor(in_yea, 'error');
-        setCSSFor($('input[type=submit]')[0], 'error',"La fecha que ingrseó no es válida");
-        in_day.value = "";
-        in_mon.value = "";
-        in_yea.value = "";
-        return false;
-    }
     return true;
-}
-
-function addUser() {
-    let in_nombres = $('#txt_nombres').val();
-    let in_apellidos = $('#txt_apellidos').val();
-    let in_username = $('#txt_username').val();
-    let in_date = $('#nbr_dia').val() + '/' + $('#slt_mes').val() + '/' + $('#nbr_año').val();
-    let in_email = $('#eml_correoe').val();
-    let in_pass = $('#psw_password').val();
-    let new_user = new Usuario(
-        in_nombres,
-        in_apellidos,
-        in_username,
-        in_date,
-        in_email,
-        in_pass
-    );
-    let index = 'usr' + num;
-    localStorage.setItem(index, new_user.stringify());
-    num++;
-    localStorage.setItem("cant", num);
 }
 
 function emptyFields() {

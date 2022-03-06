@@ -15,7 +15,7 @@
         <div class="header">
             <h2>Crear Cuenta</h2>
         </div>
-        <form class="form" id="form" action="inicio_sesion" method="post">
+        <form class="form" id="form" action="inicio_sesion.html" method="post">
             <h4>Foto de perfil</h2>
             <div class="form-control" estado="vacio">
                 <img id="frame" width="150" height="130">
@@ -36,31 +36,7 @@
                 <small>Error</small>
             </div>
             <div class="form-control" estado="vacio">
-                <h4>Fecha de nacimiento</h4>
-                <input type="number" id="nbr_dia" name="Dia de nacimiento" placeholder="Día">
-                <small>Error</small>
-            </div>
-            <div class="form-control" estado="vacio">
-                <input name="Mes de nacimiento" style="display:none">
-                <select name="Mes de nacimiento" id="slt_mes">
-                    <option disabled selected value>Mes</option>
-                    <option value="1">Enero</option>
-                    <option value="2">Febrero</option>
-                    <option value="3">Marzo</option>
-                    <option value="4">Abril</option>
-                    <option value="5">Mayo</option>
-                    <option value="6">Junio</option>
-                    <option value="7">Julio</option>
-                    <option value="8">Agosto</option>
-                    <option value="9">Septiembre</option>
-                    <option value="10">Octubre</option>
-                    <option value="11">Noviembre</option>
-                    <option value="12">Diciembre</option>
-                </select>
-                <small>Error</small>
-            </div>
-            <div class="form-control" estado="vacio">
-                <input type="number" id="nbr_año" name="Año de nacimiento" placeholder="Año">
+                <input type="date" id="dt_fecnac" name="Fecha de nacimiento">
                 <small>Error</small>
             </div>
             <div class="form-control" estado="vacio">

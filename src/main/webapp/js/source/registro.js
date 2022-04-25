@@ -13,7 +13,7 @@ $(document).ready(function() {
 
     $('#txt_nombres').change(function() {
         let value = $(this).val();
-        if(value == "") {
+        if(value === "") {
             setCSSFor($(this)[0], 'normal');
             setStateFor($(this)[0], 'normal');
         }
@@ -30,7 +30,7 @@ $(document).ready(function() {
 
     $('#txt_apellidos').change(function() {
         let value = $(this).val();
-        if(value == "") {
+        if(value === "") {
             setCSSFor($(this)[0], 'normal');
             setStateFor($(this)[0], 'normal');
         }
@@ -47,7 +47,7 @@ $(document).ready(function() {
 
     $('#txt_username').change(function() {
         let value = $(this).val();
-        if(value == "") {
+        if(value === "") {
             setCSSFor($(this)[0], 'normal');
             setStateFor($(this)[0], 'normal');
         }
@@ -79,7 +79,7 @@ $(document).ready(function() {
 
     $('#eml_correoe').change(function() {
         let value = $(this).val();
-        if (value == "") {
+        if (value === "") {
             setCSSFor($(this)[0], 'normal');
             setStateFor($(this)[0], 'normal');
         }
@@ -96,7 +96,7 @@ $(document).ready(function() {
 
     $('#psw_password').change(function() {
         let value = $(this).val();
-        if (value == "") {
+        if (value === "") {
             setCSSFor($(this)[0], 'normal');
             setStateFor($(this)[0], 'normal');
         }
@@ -118,8 +118,8 @@ $(document).ready(function() {
 
     $('#psw_confpassword').change(function() {
         let value = $(this).val();
-        let password = $('#psw_password').val()
-        if (value == "") {
+        let password = $('#psw_password').val();
+        if (value === "") {
             setCSSFor($(this)[0], 'normal');
             setStateFor($(this)[0], 'normal');
         }
@@ -134,18 +134,35 @@ $(document).ready(function() {
         checkAllCorrect();
     })
 
-    $('[type=submit]').click(function(e){
+    $('#form').submit(function(e){
         e.preventDefault();
         if (checkInputs()) {
+            $.ajax({
+                data: $(this).serialize(),
+                type: "POST",
+                dataType: "json",
+                url: "RegistrarUsuario"
+            }).done(function(data){
+                if (data.resultado === true) {
+                    alert(data.razon);
+                    emptyFields();
+                    window.location.replace("inicio_sesion.html");
+                }
+                else {
+                    alert(data.razon);
+                }
+            }).fail(function(jqXHR, textEstado) {
+                console.log("Por qué valio chettos:" + textEstado);
+            });
         }
-    })
+    });
 
 });
 
 function checkAllCorrect() {
     let divs = Array.from($('#form').children());
     for (let i = 0; i < divs.length - 1; i++) {
-        if (divs[i].getAttribute("estado") == "novalido") {
+        if (divs[i].getAttribute("estado") === "novalido") {
             let input = divs[i].querySelector('input');
             setCSSFor($('input[type=submit]')[0], 'error', "El campo " + input.getAttribute('name') + " está incorrecto");
             return false;
@@ -159,7 +176,7 @@ function checkNoEmpty() {
     let divs = Array.from($('#form').children());
     let all_correct = true;
     for (let i = 0; i < divs.length - 1; i++) {
-        if (divs[i].getAttribute("estado") == "vacio") {
+        if (divs[i].getAttribute("estado") === "vacio") {
             let input = divs[i].querySelector('input');
             setCSSFor(input, 'error', "Llene éste campo.");
             all_correct = false;

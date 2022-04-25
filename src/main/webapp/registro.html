@@ -6,20 +6,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>QuickNotes - ¡Registrate!</title>
     <link rel="stylesheet" href="css/registro_styles.css">
-    <script src="javascript/lib/jquery-3.6.0.min.js"></script>
-    <script src="javascript/models/Validators.js"></script>
-    <script src="javascript/models/Usuario.js"></script>
+    <script src="js/lib/jquery-3.6.0.min.js"></script>
+    <script src="js/models/Validators.js"></script>
+    <script src="js/models/Usuario.js"></script>
 </head>
 <body>
     <div class="container">
         <div class="header">
             <h2>Crear Cuenta</h2>
         </div>
-        <form class="form" id="form" action="inicio_sesion.html" method="post">
+        <form class="form" id="form">
             <h4>Foto de perfil</h2>
             <div class="form-control" estado="vacio">
                 <img id="frame" width="150" height="130">
-                <input type="file" id="fl_photoholder" name="Foto de Perfil" accept="image/*" style="display:none;"></input>
+                <input type="file" id="fl_photoholder" name="Foto de Perfil" accept="image/*" style="display:none;">
                 <input type="button" value="Cargar imagen" id="btn_loadphoto">
                 <small>Error</small>
             </div>
@@ -57,6 +57,6 @@
             </div>
         </form>
     </div>
-    <script src = "javascript/registro.js"></script>
+    <script src = "js/source/registro.js"></script>
 </body>
 </html>

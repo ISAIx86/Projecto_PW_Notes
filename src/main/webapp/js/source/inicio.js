@@ -2,7 +2,7 @@ $(document).ready(function() {
 
     $('#eml_login').change(function() {
         let value = $(this).val();
-        if (value == "") {
+        if (value === "") {
             setCSSFor($(this)[0], 'normal');
             setStateFor($(this)[0], 'normal');
         }
@@ -18,7 +18,7 @@ $(document).ready(function() {
 
     $('#psw_login').change(function() {
         let value = $(this).val();
-        if (value == "") {
+        if (value === "") {
             setCSSFor($(this)[0], 'normal');
             setStateFor($(this)[0], 'normal');
         }
@@ -36,10 +36,24 @@ $(document).ready(function() {
         }
     });
     
-    $('input[type=submit]').click(function(e) {
+    $('#form').submit(function(e) {
         e.preventDefault();
         if(checkInputs()) {
-            alert("Ha iniciado sesión!");
+            $.ajax({
+                data: $(this).serialize(),
+                type: "GET",
+                dataType: "json",
+                url: "RegistrarUsuario"
+            }).done(function(data){
+                if (data.resultado === true) {
+                    
+                }
+                else {
+                    alert("Algo salió mal.");
+                }
+            }).fail(function(jqXHR, textEstado) {
+                console.log("Por qué valio chettos:" + textEstado);
+            });
         }
     });
 
@@ -48,12 +62,12 @@ $(document).ready(function() {
 function checkInputs() {
     let email = $('#eml_login')[0];
     let pass = $('#psw_login')[0];
-    if (email.value.trim() == "") {
-        setCSSFor(email, 'error', "Ingrese un correo electrónico")
+    if (email.value.trim() === "") {
+        setCSSFor(email, 'error', "Ingrese un correo electrónico");
         return false;
     }
-    if (pass.value.trim() == "") {
-        setCSSFor(pass, 'error', "Ingrese la contraseña")
+    if (pass.value.trim() === "") {
+        setCSSFor(pass, 'error', "Ingrese la contraseña");
         return false;
     }
     return true;

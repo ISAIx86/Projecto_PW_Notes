@@ -1,0 +1,86 @@
+/* Contenedor de formulario */
+.form-container {
+    background-color: whitesmoke;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    width: 600px;
+    max-width: 100%;
+}
+
+/* Formulario */
+.form {
+    padding: 30px 40px;
+    background: #fff;
+}
+
+/* Controla estado de inputs de formulario */
+.form-control {
+    display: block;
+    margin: 0 auto;
+    padding-bottom: 20px;
+}
+
+/* Estilos de input */
+.form-control input {
+    border: 2px solid #f0f0f0;
+    border-radius: 4px;
+    display: block;
+    margin: 0 auto;
+    font-family: inherit;
+    font-size: 14px;
+    padding: 8px;
+    width: 85%;
+}
+.form-control.success input {
+    border: 2px solid #2ecc71;
+}
+.form-control.error input {
+    border: 2px solid #e74c3c;
+}
+
+/* Estilos de small */
+.form-control small {
+    visibility: hidden;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    font-size: 15px;
+}
+.form-control.error small {
+    color: #e74c3c;
+    visibility: visible;
+}
+
+/* Estilos de submit */
+.form-control input[type="submit"] {
+    background-color: rgb(88, 204, 165);
+    border: 2px solid rgb(88, 204, 165);
+    color: #fff;
+    font-size: 16px;
+    padding: 10px;
+}
+.form-control input[type="submit"]:hover {
+    cursor: pointer;
+    background-color: rgb(48, 145, 112);
+}
+.form-control.error input[type="submit"] {
+    background-color: rgb(247, 43, 43);
+    border: 2px solid rgb(247, 43, 43);
+    font-size: 16px;
+    padding: 10px;
+}
+.form-control.error input[type="submit"]:hover {
+    cursor: pointer;
+    background-color: rgb(209, 28, 28);
+}
+
+/* Estilos de selector de imagen */
+.form-control label {
+    width: 85%;
+    display: block;
+    margin: 0 auto;
+}
+.form-control img {
+    display: block;
+    margin: 0 auto;
+}

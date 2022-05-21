@@ -38,7 +38,7 @@ public class Notas {
         return res;
     }
     
-    public boolean ValdarCampos() {
+    public boolean ValidarCampos() {
         boolean res = true;
         if (this.titulo.isEmpty()) {
             System.out.println("¡Nota sin título!.");
@@ -48,30 +48,12 @@ public class Notas {
     }
     
     // Getters
-    public UUID getId_nota() {
-        return id_nota;
-    }
-    
-    public byte[] getId_nota_bytes() {
-        byte[] uuidBytes = new byte[16];
-        ByteBuffer.wrap(uuidBytes)
-        .order(ByteOrder.BIG_ENDIAN)
-        .putLong(id_nota.getMostSignificantBits())
-        .putLong(id_nota.getLeastSignificantBits());
-        return uuidBytes;
+    public String getId_nota() {
+        return id_nota.toString();
     }
 
-    public UUID getId_usuario() {
-        return id_usuario;
-    }
-    
-    public byte[] getId_usuario_bytes() {
-        byte[] uuidBytes = new byte[16];
-        ByteBuffer.wrap(uuidBytes)
-        .order(ByteOrder.BIG_ENDIAN)
-        .putLong(id_usuario.getMostSignificantBits())
-        .putLong(id_usuario.getLeastSignificantBits());
-        return uuidBytes;
+    public String getId_usuario() {
+        return id_usuario.toString();
     }
 
     public String getTitulo() {

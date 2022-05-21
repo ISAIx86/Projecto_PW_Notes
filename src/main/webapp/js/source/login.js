@@ -36,20 +36,22 @@ $(document).ready(function() {
         }
     });
     
-    $('#form').submit(function(e) {
+    $('#login_form').submit(function(e) {
         e.preventDefault();
         if(checkInputs()) {
             $.ajax({
                 data: $(this).serialize(),
-                type: "GET",
+                type: "POST",
                 dataType: "json",
-                url: "RegistrarUsuario"
+                url: "IniciarUsuario"
             }).done(function(data){
                 if (data.resultado === true) {
-                    
+                    alert(data.razon);
+                    emptyFields();
+                    window.location.replace("mainpage_proto.html");
                 }
                 else {
-                    alert("Algo salió mal.");
+                    alert(data.razon);
                 }
             }).fail(function(jqXHR, textEstado) {
                 console.log("Por qué valio chettos:" + textEstado);

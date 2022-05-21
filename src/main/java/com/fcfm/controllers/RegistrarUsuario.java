@@ -60,7 +60,8 @@ public class RegistrarUsuario extends HttpServlet {
             request.getParameter("Contraseña"),
             request.getParameter("Confirmar contraseña"),
             null,
-            false
+            false,
+            null
         );
         
         String daores = usdao.NuevoUsuario(nuevoUs);
@@ -83,10 +84,10 @@ public class RegistrarUsuario extends HttpServlet {
                 result.put("razon", "Error fatal en el server.");
                 break;
         }
-            String json = new Gson().toJson(result);
-            PrintWriter out = response.getWriter();
-            out.print(json);
-            out.flush();
+        String json = new Gson().toJson(result);
+        PrintWriter out = response.getWriter();
+        out.print(json);
+        out.flush();
     }
 
     @Override

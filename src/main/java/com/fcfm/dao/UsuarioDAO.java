@@ -30,26 +30,19 @@ public class UsuarioDAO {
         conn = null;
     }
     
-    private byte[] convertUUIDtoBytes(UUID _uuid) {
-        byte[] uuidBytes = new byte[16];
-        ByteBuffer.wrap(uuidBytes).order(ByteOrder.BIG_ENDIAN).putLong(_uuid.getMostSignificantBits()).putLong(_uuid.getLeastSignificantBits());
-        return uuidBytes;
-    }
-    
     public String NuevoUsuario(Usuario new_usuario) {
         if (!getConnection())
             return null;
         if (!new_usuario.ValidarCampos())
             return "invalid_info";
         try {
-            CallableStatement stmt = conn.prepareCall("call registrar_usuario(?, ?, ?, ?, ?, ?, ?);");
+            CallableStatement stmt = conn.prepareCall("call registrar_usuario(?, ?, ?, ?, ?, ?);");
             stmt.setString(1, new_usuario.getNombres());
             stmt.setString(2, new_usuario.getApellidos());
-            stmt.setNull(3, 0);
-            stmt.setDate(4, new java.sql.Date(new_usuario.getFecha_nac().getTime()));
-            stmt.setString(5, new_usuario.getCorreo_e());
-            stmt.setString(6, new_usuario.getUsername());
-            stmt.setString(7, new_usuario.getPassword());
+            stmt.setDate(3, new java.sql.Date(new_usuario.getFecha_nac().getTime()));
+            stmt.setString(4, new_usuario.getCorreo_e());
+            stmt.setString(5, new_usuario.getUsername());
+            stmt.setString(6, new_usuario.getPassword());
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
                 return rs.getString("result");
@@ -71,7 +64,7 @@ public class UsuarioDAO {
             return false;
         try {
             CallableStatement stmt = conn.prepareCall("call editar_usuario(?, ?, ?, ?, ?, ?, ?, ?);");
-            stmt.setBytes(1, new_usuario.getId_usuario_bytes());
+            stmt.setString(1, new_usuario.getId_usuario());
             stmt.setString(2, new_usuario.getNombres());
             stmt.setString(3, new_usuario.getApellidos());
             stmt.setNull(4, 0);
@@ -94,7 +87,7 @@ public class UsuarioDAO {
         return false;
     }
     
-    public String LoginUsuario(String correo, String password) {
+    public Usuario LoginUsuario(String correo, String password) {
         if (!getConnection())
             return null;
         try {
@@ -103,7 +96,26 @@ public class UsuarioDAO {
             stmt.setString(2, password);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
-                System.out.println(rs.getString("result"));
+                String result = rs.getString("result");
+                Usuario resUs;
+                if (result.contentEquals("user_no_exists") | result.contentEquals("wrong_password")) {
+                    resUs = new Usuario(
+                            null, null, null, null,
+                            null, null, null, null,
+                            null, null, false, result
+                    );
+                }
+                else {
+                    resUs = new Usuario(
+                            UUID.fromString(rs.getString("ID")),
+                            null, null, null, null,
+                            rs.getString("Correo electronico"),
+                            rs.getString("Nombre de usuario"),
+                            null, null, null, false,
+                            result
+                    );
+                }
+                return resUs;
             }
         }
         catch(Exception e) {
@@ -134,7 +146,8 @@ public class UsuarioDAO {
                         rs.getString("Contrasena"),
                         null,
                         new java.util.Date(ts.getTime()),
-                        rs.getBoolean("Activo")
+                        rs.getBoolean("Activo"),
+                        null
                 );
                 System.out.println(usn);
             }
@@ -152,7 +165,7 @@ public class UsuarioDAO {
             return null;
         try {
             CallableStatement stmt = conn.prepareCall("call consultar_usuario_id(?);");
-            stmt.setBytes(1, convertUUIDtoBytes(id));
+            stmt.setString(1, id.toString());
             ResultSet rs = stmt.executeQuery();
             if(rs.next()) {
                 Timestamp ts = rs.getTimestamp("Fecha de creacion");
@@ -167,7 +180,8 @@ public class UsuarioDAO {
                         rs.getString("Contrasena"),
                         null,
                         new java.util.Date(ts.getTime()),
-                        rs.getBoolean("Activo")
+                        rs.getBoolean("Activo"),
+                        null
                 );
                 return usn;
             }
@@ -186,7 +200,7 @@ public class UsuarioDAO {
             return false;
         try {
             CallableStatement stmt = conn.prepareCall("call borrar_usuario(?);");
-            stmt.setBytes(1, convertUUIDtoBytes(id));
+            stmt.setString(1, id.toString());
             stmt.executeUpdate();
             return true;
         }

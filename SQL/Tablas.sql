@@ -17,13 +17,13 @@ create database quicknotes_db;
 use quicknotes_db;
 
 -- // USUARIOS \\ --
+drop table if exists usuarios;
 create table if not exists usuarios (
   id_usuario binary(16) not null,
-  nombres varchar(60) not null,
-  apellidos varchar(60) not null,
-  foto_perfil blob,
+  nombres varchar(64) not null,
+  apellidos varchar(64) not null,
   fecha_nac date not null,
-  correo_e varchar(50) not null,
+  correo_e varchar(64) not null,
   username varchar(32) not null,
   password varchar(16) not null,
   fecha_creacion datetime(1) not null,
@@ -31,8 +31,8 @@ create table if not exists usuarios (
   primary key (id_usuario)
 ) engine=InnoDB default charset=utf8mb4 collate=utf8mb4_0900_ai_ci;
 
-
 -- // NOTAS \\ --
+drop table if exists notas;
 create table if not exists notas (
   id_nota binary(16) not null,
   id_usuario binary(16) not null,
@@ -40,7 +40,17 @@ create table if not exists notas (
   fecha_creacion datetime(1) not null,
   contenido varchar(2048) default null,
   activo tinyint not null default '1',
-  primary key (id_nota),
-  key fk_nota_usuario_idx (id_usuario),
-  constraint fk_nota_usuario foreign key (id_usuario) references usuarios (id_usuario)
+  primary key (id_nota)
 ) engine=InnoDB default charset=utf8mb4 collate=utf8mb4_0900_ai_ci;
+
+-- // LLAVE FORANEA \\
+alter table notas add
+	key fk_nota_usuario_idx (id_usuario);
+alter table notas add
+	constraint fk_nota_usuario foreign key (id_usuario) references usuarios (id_usuario);
+
+-- // QUITAR LLAVES \\ -
+alter table notas drop
+	constraint fk_nota_usuario;
+alter table notas drop
+	key fk_nota_usuario_idx;

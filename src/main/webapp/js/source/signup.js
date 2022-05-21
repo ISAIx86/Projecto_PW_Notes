@@ -1,16 +1,5 @@
 $(document).ready(function() {
 
-    $('#fl_photoholder').change(function() {
-        setCSSFor($(this)[0], 'success');
-        setStateFor($(this)[0], 'success');
-        imagePreview();
-        checkAllCorrect();
-    });
-
-    $('#btn_loadphoto').click(function() {
-        document.getElementById('fl_photoholder').click();
-    });
-
     $('#txt_nombres').change(function() {
         let value = $(this).val();
         if(value === "") {
@@ -146,7 +135,7 @@ $(document).ready(function() {
                 if (data.resultado === true) {
                     alert(data.razon);
                     emptyFields();
-                    window.location.replace("inicio_sesion.html");
+                    window.location.replace("login_proto.html");
                 }
                 else {
                     alert(data.razon);
@@ -193,9 +182,6 @@ function checkInputs() {
 }
 
 function emptyFields() {
-    let frame = $('#frame')[0];
-    frame.src="";
-    $('#fl_photoholder').val("");
     $('#txt_nombres').val("");
     $('#txt_apellidos').val("");
     $('#txt_username').val("");

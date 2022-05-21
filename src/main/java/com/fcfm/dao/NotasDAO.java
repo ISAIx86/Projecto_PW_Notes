@@ -15,12 +15,6 @@ public class NotasDAO {
     private DbConnection dbconn = null;
     private Connection conn = null;
     
-    private byte[] convertUUIDtoBytes(UUID _uuid) {
-        byte[] uuidBytes = new byte[16];
-        ByteBuffer.wrap(uuidBytes).order(ByteOrder.BIG_ENDIAN).putLong(_uuid.getMostSignificantBits()).putLong(_uuid.getLeastSignificantBits());
-        return uuidBytes;
-    }
-    
     private boolean getConnection() {
         dbconn = DbConnection.getInstance();
         if (dbconn != null){
@@ -42,11 +36,11 @@ public class NotasDAO {
             return false;
         if (!new_nota.ValidarPropietario())
             return false;
-        if (!new_nota.ValdarCampos())
+        if (!new_nota.ValidarCampos())
             return false;
         try {
             CallableStatement stmt = conn.prepareCall("call nueva_nota(?, ?, ?);");
-            stmt.setBytes(1, new_nota.getId_usuario_bytes());
+            stmt.setString(1, new_nota.getId_usuario());
             stmt.setString(2, new_nota.getTitulo());
             stmt.setString(3, new_nota.getContenido());
             stmt.executeUpdate();
@@ -64,11 +58,11 @@ public class NotasDAO {
     public boolean EditarNota(Notas new_nota) {
         if (!getConnection())
             return false;
-        if (!new_nota.ValdarCampos())
+        if (!new_nota.ValidarCampos())
             return false;
         try {
             CallableStatement stmt = conn.prepareCall("call editar_nota(?, ?, ?);");
-            stmt.setBytes(1, new_nota.getId_nota_bytes());
+            stmt.setString(1, new_nota.getId_nota());
             stmt.setString(2, new_nota.getTitulo());
             stmt.setString(3, new_nota.getContenido());
             stmt.executeUpdate();
@@ -88,7 +82,7 @@ public class NotasDAO {
             return;
         try {
             CallableStatement stmt = conn.prepareCall("call consulta_notas_usuario(?);");
-            stmt.setBytes(1, convertUUIDtoBytes(id_usuario));
+            stmt.setString(1, id_usuario.toString());
             ResultSet rs = stmt.executeQuery();
             while(rs.next()) {
                 Timestamp ts = rs.getTimestamp("Fecha de creacion");
@@ -116,7 +110,7 @@ public class NotasDAO {
             return null;
         try {
             CallableStatement stmt = conn.prepareCall("call consulta_nota(?);");
-            stmt.setBytes(1, convertUUIDtoBytes(id_nota));
+            stmt.setString(1, id_nota.toString());
             ResultSet rs = stmt.executeQuery();
             if(rs.next()) {
                 Timestamp ts = rs.getTimestamp("Fecha de creacion");
@@ -145,7 +139,7 @@ public class NotasDAO {
             return false;
         try {
             CallableStatement stmt = conn.prepareCall("call borrar_nota(?);");
-            stmt.setBytes(1, convertUUIDtoBytes(id_nota));
+            stmt.setString(1, id_nota.toString());
             stmt.executeUpdate();
             return true;
         }

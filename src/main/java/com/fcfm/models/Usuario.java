@@ -9,11 +9,10 @@ import java.util.regex.Pattern;
 import java.text.SimpleDateFormat;
 
 public class Usuario {
-    
+
     private UUID id_usuario;
     private String nombres;
     private String apellidos;
-    private Blob foto_perfil;
     private Date fecha_nac = null;
     private String correo_e;
     private String username;
@@ -21,6 +20,7 @@ public class Usuario {
     private String confirm_password;
     private Date fecha_creacion;
     private boolean activo;
+    private String result;
     
     // Constructo
     public Usuario (
@@ -34,12 +34,12 @@ public class Usuario {
         String password,
         String confirmPassword,
         Date fecha_creacion,
-        boolean activo
+        boolean activo,
+        String result
     ) {
         this.id_usuario = id_usuario;
         this.nombres = nombres;
         this.apellidos = apellidos;
-        this.foto_perfil = foto_perfil;
         try {
             this.fecha_nac = new SimpleDateFormat("yyyy-MM-dd").parse(fecha_nac);
         }
@@ -52,6 +52,7 @@ public class Usuario {
         this.confirm_password = confirmPassword;
         this.fecha_creacion = fecha_creacion;
         this.activo = activo;
+        this.result = result;
     }
     
     // Sobrecargas
@@ -150,17 +151,8 @@ public class Usuario {
     }
 
     // Getters
-    public UUID getId_usuario() {
-        return id_usuario;
-    }
-    
-    public byte[] getId_usuario_bytes() {
-        byte[] uuidBytes = new byte[16];
-        ByteBuffer.wrap(uuidBytes)
-        .order(ByteOrder.BIG_ENDIAN)
-        .putLong(id_usuario.getMostSignificantBits())
-        .putLong(id_usuario.getLeastSignificantBits());
-        return uuidBytes;
+    public String getId_usuario() {
+        return id_usuario.toString();
     }
 
     public String getNombres() {
@@ -169,10 +161,6 @@ public class Usuario {
 
     public String getApellidos() {
         return apellidos;
-    }
-    
-    public Blob getFoto_perfil() {
-        return foto_perfil;
     }
 
     public Date getFecha_nac() {
@@ -198,6 +186,10 @@ public class Usuario {
     public boolean isActive() {
         return activo;
     }
+    
+    public String getResult() {
+        return result;
+    }
 
     // Setters
     public void setNombres(String nombres) {
@@ -206,10 +198,6 @@ public class Usuario {
 
     public void setApellidos(String apellidos) {
         this.apellidos = apellidos;
-    }
-
-    public void setFoto_perfil(Blob foto_perfil) {
-        this.foto_perfil = foto_perfil;
     }
 
     public void setFecha_nac(Date fecha_nac) {

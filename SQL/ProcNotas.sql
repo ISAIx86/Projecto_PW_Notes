@@ -147,7 +147,7 @@ BEGIN
     
 	set pagem = ((_page - 1) * _size);
     
-	if (_contenido != "" or _contenido != NULL) then
+	if (_contenido is not null) then
 		set string_contain = concat(' and contenido like "%', _contenido, '%"');
 	else
 		set string_contain = "";
@@ -175,14 +175,14 @@ BEGIN
 			activo as Activo
 		from notas where
 			id_usuario = uuid_to_bin("', _id_usuario, '")',
-            start_date, end_date, ' and activo = 1 ',
-		'limit ', pagem, ', ',  _size, ';'
+            string_contain, start_date, end_date, ' and activo = 1 ',
+		'order by fecha_creacion desc limit ', pagem, ', ',  _size, ';'
     );
     
     select @qry_string;
     
-    prepare qry from @qry_string;
-	execute qry;
+     prepare qry from @qry_string;
+	 execute qry;
 	
 END$$
 DELIMITER ;

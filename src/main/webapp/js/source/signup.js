@@ -4,15 +4,12 @@ $(document).ready(function() {
         let value = $(this).val();
         if(value === "") {
             setCSSFor($(this)[0], 'normal');
-            setStateFor($(this)[0], 'normal');
         }
         else if (!noNumbers(value)){
-            setCSSFor($(this)[0], 'error', "El Nombre no debe contener números");
-            setStateFor($(this)[0], 'error');
+            setCSSFor($(this)[0], 'error', 'El nombre no puede contener números.');
         }
         else {
             setCSSFor($(this)[0], 'success');
-            setStateFor($(this)[0], 'success');
         }
         checkAllCorrect();
     });
@@ -21,15 +18,12 @@ $(document).ready(function() {
         let value = $(this).val();
         if(value === "") {
             setCSSFor($(this)[0], 'normal');
-            setStateFor($(this)[0], 'normal');
         }
         else if (!noNumbers(value)) {
-            setCSSFor($(this)[0], 'error', "El Apellido no debe contener números");
-            setStateFor($(this)[0], 'error');
+            setCSSFor($(this)[0], 'error', 'Los apellidos no pueden contener números.');
         }
         else {
             setCSSFor($(this)[0], 'success');
-            setStateFor($(this)[0], 'success');
         }
         checkAllCorrect();
     });
@@ -38,11 +32,9 @@ $(document).ready(function() {
         let value = $(this).val();
         if(value === "") {
             setCSSFor($(this)[0], 'normal');
-            setStateFor($(this)[0], 'normal');
         }
         else {
             setCSSFor($(this)[0], 'success');
-            setStateFor($(this)[0], 'success');
         }
         checkAllCorrect();
     });
@@ -52,16 +44,13 @@ $(document).ready(function() {
         let sep = value.split('-');
         let fecnac = new Date(sep[0], sep[1] - 1, sep[2]);
         if (!validDate(fecnac)) {
-            setCSSFor($(this)[0], 'error', 'No debe ser una fecha próxima');
-            setStateFor($(this)[0], 'error');
+            setCSSFor($(this)[0], 'error', 'La fecha no debe pasar de la actual.');
         }
         else if (isNaN(fecnac)){
-            setCSSFor($(this)[0], 'error', 'La fecha no existe');
-            setStateFor($(this)[0], 'error');
+            setCSSFor($(this)[0], 'error', 'La fecha ingresada no existe.');
         }
         else {
             setCSSFor($(this)[0], 'success');
-            setStateFor($(this)[0], 'success');
         }
         checkAllCorrect();
     });
@@ -70,15 +59,12 @@ $(document).ready(function() {
         let value = $(this).val();
         if (value === "") {
             setCSSFor($(this)[0], 'normal');
-            setStateFor($(this)[0], 'normal');
         }
         else if (!validEmail(value)) {
-            setCSSFor($(this)[0], 'error', "Éste correo no tiene formato válido");
-            setStateFor($(this)[0], 'error');
+            setCSSFor($(this)[0], 'error', 'Formato de correo electrónico no válido.');
         }
         else {
             setCSSFor($(this)[0], 'success');
-            setStateFor($(this)[0], 'success');
         }
         checkAllCorrect();
     });
@@ -87,19 +73,16 @@ $(document).ready(function() {
         let value = $(this).val();
         if (value === "") {
             setCSSFor($(this)[0], 'normal');
-            setStateFor($(this)[0], 'normal');
         }
         else if (value.length < 8) {
-            setCSSFor($(this)[0], 'error', "La contraseña ser de mínimo 8 caracteres");
-            setStateFor($(this)[0], 'error');
+            setCSSFor($(this)[0], 'error', 'La contraseña debe ser de 8 a 16 caracteres.');
+            
         }
         else if (!validPassword(value)) {
-            setCSSFor($(this)[0], 'error', "Debe contener al menos: una mayús, una minús, un número y un caractér especial");
-            setStateFor($(this)[0], 'error');
+            setCSSFor($(this)[0], 'error', 'El formato debe contener mayúsculas, minúsculas, números y caracteres especiales.');
         }
         else {
             setCSSFor($(this)[0], 'success');
-            setStateFor($(this)[0], 'success');
             $("#psw_confpassword").trigger("change");
         }
         checkAllCorrect();
@@ -110,20 +93,18 @@ $(document).ready(function() {
         let password = $('#psw_password').val();
         if (value === "") {
             setCSSFor($(this)[0], 'normal');
-            setStateFor($(this)[0], 'normal');
         }
         else if (value !== password) {
-            setCSSFor($(this)[0], 'error', "La contraseña no coincide");
-            setStateFor($(this)[0], 'error');
+            setCSSFor($(this)[0], 'error', 'La contraseña no coincide.');
         }
         else {
             setCSSFor($(this)[0], 'success');
-            setStateFor($(this)[0], 'success');
         }
         checkAllCorrect();
     })
 
     $('#form').submit(function(e){
+        debugger;
         e.preventDefault();
         if (checkInputs()) {
             $.ajax({
@@ -149,29 +130,29 @@ $(document).ready(function() {
 });
 
 function checkAllCorrect() {
-    let divs = Array.from($('#form').children());
+    let divs = Array.from($('#form').children('div'));
     for (let i = 0; i < divs.length - 1; i++) {
-        if (divs[i].getAttribute("estado") === "novalido") {
+        if (divs[i].getAttribute("state") === "nv") {
             let input = divs[i].querySelector('input');
-            setCSSFor($('input[type=submit]')[0], 'error', "El campo " + input.getAttribute('name') + " está incorrecto");
+            setCSSFor($('button[type=submit]')[0], 'error', "El campo " + input.getAttribute('name') + " está incorrecto");
             return false;
         }
     }
-    setCSSFor($('input[type=submit]')[0], 'normal');
+    setCSSFor($('button[type=submit]')[0], 'normal');
     return true;
 }
 
 function checkNoEmpty() {
-    let divs = Array.from($('#form').children());
+    let divs = Array.from($('#form').children('div'));
     let all_correct = true;
     for (let i = 0; i < divs.length - 1; i++) {
-        if (divs[i].getAttribute("estado") === "vacio") {
+        if (divs[i].getAttribute('state') === "mt") {
             let input = divs[i].querySelector('input');
             setCSSFor(input, 'error', "Llene éste campo.");
             all_correct = false;
         }
     }
-    if (!all_correct) setCSSFor($('input[type=submit]')[0], 'error', "Hay campos vacíos, por favor complete la información");
+    if (!all_correct) setCSSFor($('button[type=submit]')[0], 'error', "Hay campos vacíos, por favor complete la información");
     return all_correct;
 }
 
@@ -191,9 +172,4 @@ function emptyFields() {
     $('#eml_correoe').val("");
     $('#psw_password').val("");
     $('#psw_confpassword').val("");
-}
-
-function imagePreview() {
-    let frame = $('#frame')[0];
-    frame.src=URL.createObjectURL(event.target.files[0]);
 }

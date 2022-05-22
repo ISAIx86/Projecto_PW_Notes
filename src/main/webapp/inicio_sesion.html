@@ -1,34 +1,56 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="css/registro_styles.css">
-    <script src="js/lib/jquery-3.6.0.min.js"></script>
-    <script src="js/models/Validators.js"></script>
-    <script src="js/models/Usuario.js"></script>
-</head>
-<body>
-    <div class="container">
-        <div class="header">
-            <h2>Iniciar sesión</h2>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <link rel="stylesheet"  href="css/login.css">
+        <title>Login</title>  
+    </head>
+    <body>
+
+        <div class="container">
+            <div class="row" id="caja"> 
+
+                <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+                    <img src="IMG/notas para todos.jpg" class="img-fluid" alt="image">
+                </div>
+
+                <div class="col-sm-9 col-md-7 col-lg-5 mx-auto" >
+                    <h3 class="card-title text-center">Iniciar Sesión</h3>
+
+                    <form id="loginForm">
+
+                        <div class="form-label-group">
+                            <input id="eml_login" type="email" name="Correo_electronico" class="form-control mt-4" placeholder="Correo electrónico">
+                            <small></small>
+                        </div>
+
+                        <div class="form-label-group">
+                            <input id="psw_login" type="password" name="Contrasena" class="form-control mt-4" placeholder="Contraseña">
+                            <small></small>
+                        </div>
+
+                        <div class="custom-control custom-checkbox mb-3">
+                            <input type="checkbox" class="custom-control-input" id="customCheck1">
+                            <label class="custom-control-label" for="customCheck1">Recordar contraseña</label>
+                        </div>
+
+                        <input name="accion" type="hidden" value="login"/>
+                        
+                        <div class="form-label-group">
+                            <button class="btn btn-lg btn-success btn-block text-uppercase my-4" type="submit">Iniciar sesión</button>
+                        </div>
+
+                        <hr class="my-4">
+                        <a class="btn btn-lg btn-facebook btn-block text-uppercase" href="Registrar_Usuario.html"><i class="fab fa-facebook-f mr-2"></i> Registrar Usuario</a>
+
+                    </form>
+                </div>
+            </div>
         </div>
-        <form class="form" id="login_form">
-            <div class="form-control" estado="vacio">
-                <input type="email" id="eml_login" name="Correo electrónico" placeholder="Correo electrónico">
-                <small>Error</small>
-            </div>
-            <div class="form-control" estado="vacio">
-                <input type="password" id="psw_login" name="Contraseña" placeholder="Contraseña">
-                <small>Error</small>
-            </div>
-            <div class="form-control">
-                <input type="submit" value="Iniciar Sesión">
-            </div>
-        </form>
-    </div>
-    <script src="js/source/login.js"></script>
-</body>
+
+        <script src="js/lib/jquery-3.6.0.min.js"></script>
+        <script src="js/models/Validators.js"></script>
+        <script src="js/source/_login.js"></script>
+    </body>
 </html>

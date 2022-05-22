@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <link rel="stylesheet"  href="css/login.css">
+        <title>Registrar</title>
+    </head>
+
+    <body>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+
+                    <div class="card card-signin my-5">
+                        <div class="card-body">
+                            <h5 class="card-title text-center">Registro</h5>
+
+                            <form class="form-signin" id="form" enctype="multipart/form-data">
+
+                                <div class="form-label-group" state="mt">
+                                    <input id="txt_nombres" type="text" name="Nombres" class="form-control mt-3" placeholder="Nombres">
+                                    <small>Error</small>
+                                </div>
+
+                                <div class="form-label-group" state="mt">
+                                    <input id="txt_apellidos" type="text" name="Apellidos" class="form-control mt-3" placeholder="Apellidos">
+                                    <small>Error</small>
+                                </div>  
+
+                                <div class="form-label-group" state="mt">
+                                    <input id="dt_fecnac" type="date" name="Fecha_nacimiento" class ="form-control mt-3">
+                                    <small>Error</small>
+                                </div>                                
+
+                                <div class="form-label-group" state="mt">
+                                    <input id="eml_correoe" type="text"  name="Correo_electronico" id="eml_correoe"  class="form-control mt-3" placeholder="Correo"> 
+                                    <small>Error</small>
+                                </div>
+
+                                <div class="form-label-group" state="mt">
+                                    <input id="txt_username" type="text" id="txt_username"  name="Username" class="form-control mt-3" placeholder="Usuario"> 
+                                    <small>Error</small>
+                                </div>
+
+                                <div class="form-label-group" state="mt">
+                                    <input id="psw_password" type="password" id="psw_password"  name="Contrasena" class="form-control mt-3" placeholder="Contraseña">
+                                    <small>Error</small>
+                                </div>
+
+                                <div class="form-label-group" state="mt">
+                                    <input id="psw_confpassword" type="password" id="psw_confpassword"  name="Confirmar_contra" class="form-control mt-3" placeholder="Confirmar contraseña">
+                                    <small>Error</small>
+                                </div>
+
+                                <div class="form-label-group">
+                                    <button class="btn btn-lg btn-success btn-block text-uppercase my-4" type="submit">Crear Usuario</button>
+                                    <small></small>
+                                </div>
+
+                                <hr class="my-4">
+                                <a class="btn btn-lg btn-facebook btn-block text-uppercase" href="Inicio_Sesion.html"><i class="fab fa-facebook-f mr-2"></i> Regresar </a>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="js/lib/jquery-3.6.0.min.js"></script>
+        <script src="js/models/Validators.js"></script>
+        <script src="js/source/signup.js"></script>
+    </body>
+</html>

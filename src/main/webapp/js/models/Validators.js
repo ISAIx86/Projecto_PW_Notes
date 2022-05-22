@@ -1,41 +1,24 @@
-function setCSSFor(input, _class, message="") {
+function setCSSFor(input, _class, message) {
     const formControl = input.parentElement;
-    const small = formControl.querySelector('small');
+    const sm = formControl.querySelector('small');
     switch(_class) {
         case 'normal':
-            small.innerText = "";
-            formControl.className='form-control';
+            sm.innerText = message;
+            formControl.className='form-label-group';
+            formControl.setAttribute('state', 'mt');
             break;
         case 'error':
-            small.innerText = message;
-            formControl.className='form-control error';
+            sm.innerText = message;
+            formControl.className='form-label-group error';
+            formControl.setAttribute('state', 'nv');
             break;
         case 'success':
-            small.innerText = "";
-            formControl.className='form-control success';
+            formControl.className='form-label-group success';
+            formControl.setAttribute('state', 'sc');
             break;
         default:
-            small.innerText = "";
-            formControl.className='form-control';
-            break;
-    }
-}
-
-function setStateFor(input, state) {
-    const formControl = input.parentElement;
-    const small = formControl.querySelector('small');
-    switch(state) {
-        case 'normal':
-            formControl.setAttribute("estado", "vacio");
-            break;
-        case 'error':
-            formControl.setAttribute("estado", "novalido");
-            break;
-        case 'success':
-            formControl.setAttribute("estado", "correcto");
-            break;
-        default:
-            formControl.setAttribute("estado", "vacio");
+            formControl.className='form-label-group';
+            formControl.setAttribute('state', 'mt');
             break;
     }
 }

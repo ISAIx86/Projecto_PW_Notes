@@ -6,6 +6,8 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.sql.Connection;
 import java.util.UUID;
+import java.util.List;
+import java.util.ArrayList;
 import java.sql.Timestamp;
 import java.sql.CallableStatement;
 import java.sql.ResultSet;
@@ -77,13 +79,16 @@ public class NotasDAO {
         return false;
     }
     
-    public void ConsultarNotasUsuario(UUID id_usuario) {
+    public List<Notas> ConsultarNotasUsuario(UUID id_usuario, int pag, int size) {
         if (!getConnection())
-            return;
+            return null;
         try {
-            CallableStatement stmt = conn.prepareCall("call consulta_notas_usuario(?);");
+            CallableStatement stmt = conn.prepareCall("call consulta_notas_usuario(?, ?, ?);");
             stmt.setString(1, id_usuario.toString());
+            stmt.setInt(2, pag);
+            stmt.setInt(3, size);
             ResultSet rs = stmt.executeQuery();
+            List<Notas> returnlist = new ArrayList<Notas>();
             while(rs.next()) {
                 Timestamp ts = rs.getTimestamp("Fecha de creacion");
                 Notas usn = new Notas(
@@ -94,8 +99,10 @@ public class NotasDAO {
                         new java.util.Date(ts.getTime()),
                         rs.getBoolean("Activo")
                 );
+                returnlist.add(usn);
                 System.out.println(usn.toString());
             }
+            return returnlist;
         }
         catch (Exception e) {
             System.out.println(e);
@@ -103,6 +110,7 @@ public class NotasDAO {
         finally {
             closeConnection();
         }
+        return null;
     }
     
     public Notas ConsultarNota(UUID id_nota) {

@@ -3,13 +3,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 package com.fcfm.controllers;
-import com.fcfm.dao.UsuarioDAO;
-import com.fcfm.models.Usuario;
-import com.google.gson.Gson;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.HashMap;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -21,8 +17,8 @@ import javax.servlet.http.HttpSession;
  *
  * @author alexi
  */
-@WebServlet(name = "IniciarUsuario", urlPatterns = {"/IniciarUsuario"})
-public class IniciarUsuario extends HttpServlet {
+@WebServlet(name = "CerrarUsuario", urlPatterns = {"/CerrarUsuario"})
+public class CerrarUsuario extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -41,10 +37,10 @@ public class IniciarUsuario extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet InicarUsuario</title>");            
+            out.println("<title>Servlet CerrarUsuario</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet InicarUsuario at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet CerrarUsuario at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -62,6 +58,9 @@ public class IniciarUsuario extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        session.invalidate();
+        request.getRequestDispatcher("Inicio_Sesion.html").forward(request, response);
     }
 
     /**
@@ -75,35 +74,6 @@ public class IniciarUsuario extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        HashMap result = new HashMap();
-        UsuarioDAO usdao = new UsuarioDAO();
-        
-        Usuario loggedUs = usdao.LoginUsuario(
-                request.getParameter("Correo_electronico"),
-                request.getParameter("Contrasena")
-        );
-        
-        switch(loggedUs.getResult()) {
-            case "user_no_exists":
-                result.put("resultado", false);
-                result.put("razon", "El correo no existe.");
-                break;
-            case "wrong_password":
-                result.put("resultado", false);
-                result.put("razon", "Contraseña incorrecta.");
-                break;
-            case "user_logged":
-                HttpSession session = request.getSession();
-                session.setAttribute("user", loggedUs);
-                result.put("resultado", true);
-                result.put("razon", "Usuario loggeado.");
-                break;
-        }
-        String json = new Gson().toJson(result);
-        PrintWriter out = response.getWriter();
-        out.print(json);
-        out.flush();
         
     }
 

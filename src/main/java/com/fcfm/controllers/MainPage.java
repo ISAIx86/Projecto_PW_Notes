@@ -3,13 +3,16 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 package com.fcfm.controllers;
-import com.fcfm.dao.UsuarioDAO;
+import com.fcfm.dao.NotasDAO;
+import java.util.List;
+import com.fcfm.models.Notas;
 import com.fcfm.models.Usuario;
 import com.google.gson.Gson;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashMap;
+import java.util.UUID;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -21,8 +24,8 @@ import javax.servlet.http.HttpSession;
  *
  * @author alexi
  */
-@WebServlet(name = "IniciarUsuario", urlPatterns = {"/IniciarUsuario"})
-public class IniciarUsuario extends HttpServlet {
+@WebServlet(name = "MainPage", urlPatterns = {"/MainPage"})
+public class MainPage extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,19 +38,16 @@ public class IniciarUsuario extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try ( PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet InicarUsuario</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet InicarUsuario at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
+        
+        HttpSession session = request.getSession();
+        Usuario usr = (Usuario)session.getAttribute("user");
+        NotasDAO notdao = new NotasDAO();
+        List<Notas> lista = notdao.ConsultarNotasUsuario(UUID.fromString(usr.getId_usuario()), 1, 10);
+        
+        request.setAttribute("notelist", lista);
+        
+        request.getRequestDispatcher("main_page.jsp").forward(request, response);
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -62,6 +62,7 @@ public class IniciarUsuario extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        processRequest(request, response);
     }
 
     /**
@@ -77,28 +78,29 @@ public class IniciarUsuario extends HttpServlet {
             throws ServletException, IOException {
         
         HashMap result = new HashMap();
-        UsuarioDAO usdao = new UsuarioDAO();
+        NotasDAO notdao = new NotasDAO();
+        HttpSession session = request.getSession();
         
-        Usuario loggedUs = usdao.LoginUsuario(
-                request.getParameter("Correo_electronico"),
-                request.getParameter("Contrasena")
+        Usuario usr = (Usuario)session.getAttribute("user");
+        
+        Notas newnota = new Notas(
+                null,
+                UUID.fromString(usr.getId_usuario()),
+                request.getParameter("titulo"),
+                request.getParameter("contenido"),
+                null,
+                false
         );
         
-        switch(loggedUs.getResult()) {
-            case "user_no_exists":
-                result.put("resultado", false);
-                result.put("razon", "El correo no existe.");
-                break;
-            case "wrong_password":
-                result.put("resultado", false);
-                result.put("razon", "Contraseña incorrecta.");
-                break;
-            case "user_logged":
-                HttpSession session = request.getSession();
-                session.setAttribute("user", loggedUs);
-                result.put("resultado", true);
-                result.put("razon", "Usuario loggeado.");
-                break;
+        boolean isCreated = notdao.NuevaNota(newnota);
+        
+        if(isCreated) {
+            result.put("resultado", true);
+            result.put("razon", "Nota creada!");
+        }
+        else {
+            result.put("resultado", false);
+            result.put("razon", "Algo salió mal.");
         }
         String json = new Gson().toJson(result);
         PrintWriter out = response.getWriter();

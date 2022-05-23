@@ -1,0 +1,93 @@
+:root {
+    --gris: #e1e1e1;
+    --verde: rgb(74, 220, 29);
+}
+
+img {
+    width: 80px;
+    border-radius: 50px;
+}
+
+input {
+    font-size: 20px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.buscador {
+    background: var(--gris);
+    border: none;
+    text-align: center;
+    border-radius: 25px;
+}
+
+h5 {
+    font-size: 12px;
+}
+
+/*-----------------------------------------------------------------*/
+.menu {
+    display: flex;
+    height: 100%;
+}
+
+.izquierdo {
+    background-color: aqua;
+    width: 30%;
+    padding-top: 50px;
+    padding-bottom: 674px;
+}
+
+.izquierdo_1 {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.izquierdo_2 {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.derecho {
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+}
+
+.container .lili, .container .supreme {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.lili:hover,  .supreme:hover {
+    cursor: pointer;
+}
+
+.cuadrito {
+    -webkit-box-shadow: 0px 5px 15px 0px rgba(112, 112, 112, 0.48);
+    -moz-box-shadow: 0px 5px 15px 0px rgba(112, 112, 112, 0.48);
+    box-shadow: 0px 5px 15px 0px rgba(112, 112, 112, 0.48);
+    background-color: var(--blanco);
+    padding-top: 1rem;
+    width: 100px;
+}
+
+.pareja {
+    display: flex;
+    gap: 10px;
+}
+
+.iconos {
+    color: rgb(56, 196, 28);
+}
+
+#zapato {
+    padding-top: 0;
+    z-index: 100;
+    position: absolute;
+    margin-left: 50%;
+}

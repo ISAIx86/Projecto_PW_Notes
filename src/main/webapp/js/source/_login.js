@@ -41,7 +41,7 @@ $(document).ready(function() {
                 if (data.resultado === true) {
                     alert(data.razon);
                     emptyFields();
-                    window.location.replace("mainpage_proto.html");
+                    window.location.replace("MainPage");
                 }
                 else {
                     alert(data.razon);

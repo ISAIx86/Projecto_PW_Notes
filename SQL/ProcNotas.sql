@@ -78,6 +78,7 @@ begin
 	from notas where
 		id_usuario = uuid_to_bin(_id_usuario) and
 		activo = 1
+	order by fecha_creacion desc
 	limit pagem, _size;
 
 end$$

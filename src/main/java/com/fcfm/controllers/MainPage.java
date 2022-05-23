@@ -46,7 +46,7 @@ public class MainPage extends HttpServlet {
         
         request.setAttribute("notelist", lista);
         
-        request.getRequestDispatcher("main_page.jsp").forward(request, response);
+        request.getRequestDispatcher("Main_Page.jsp").forward(request, response);
         
     }
 

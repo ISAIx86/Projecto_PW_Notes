@@ -35,9 +35,7 @@
                 <input class="buscador" type="text" placeholder="¿Que Estas Buscando?"/>
                 <input class="btn btn-secondary" id="btn_nueva_nota" type="button" value="Nueva Nota"/>
                 <input class="btn btn-secondary" id="btn_editar_prefil" type="button" value="Editar perfil"/>
-                <a href="CerrarUsuario" class="btn btn-secondary">
-                    <input type="button" value="Salir"/>
-                </a>
+                <a href="CerrarUsuario" class="btn btn-secondary">Salir</a>
             </div>
         </div>
     

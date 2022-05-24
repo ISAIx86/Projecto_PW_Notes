@@ -50,7 +50,7 @@ public class MainPage extends HttpServlet {
         request.setAttribute("notelist", lista);
         request.setAttribute("maxpages", paginas);
         
-        request.getRequestDispatcher("Main_Page.jsp").forward(request, response);
+        request.getRequestDispatcher("Pagina_Principal.jsp").forward(request, response);
         
     }
 

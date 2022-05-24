@@ -25,52 +25,62 @@
 <body>
 
     <div class="menu">
-
         <div class="izquierdo">
             <div class="izquierdo_1">
-                <img src="img/photo.jpg" alt="">
+                <img src="Imagenes/NotasParaTodos.png" alt="">
                 <h5>Usuario: "Me llamo <%= user.getUsername() %>"</h5>
             </div>
 
             <div class="izquierdo_2">
                 <input class="buscador" type="text" placeholder="¿Que Estas Buscando?"/>
+                <input class="btn btn-secondary" id="btn_busqueda_avanzada" type="button" value="Busqueda Avanzada" />
                 <input class="btn btn-secondary" id="btn_nueva_nota" type="button" value="Nueva Nota"/>
                 <input class="btn btn-secondary" id="btn_editar_prefil" type="button" value="Editar perfil"/>
                 <a href="CerrarUsuario" class="btn btn-secondary">Salir</a>
             </div>
         </div>
-    
-
-
         <div class="derecho">
             <div id="get_my_notes">
                 
                 <div id="insert_new_note">
                 </div>
 
-                <div class="row my-3 mx-5">
-                    <div class="col my-3">
-                        <%
-                            if (!listanotas.isEmpty()) {
-                                int i = 0;
-                                for (Notas notita : listanotas) {
-                        %>
-                                    <div class="card" style="width: 18rem;">
-                                        <div class="card-body">
-                                            <i status="false" index="<%= i %>" class="supreme fa-solid fa-ellipsis" style="position:absolute; top: 20px; right: 20px;"></i>
-                                            <h3><%= notita.getTitulo() %></h3>
-                                            <div style="padding-top: 0;z-index: 100; position: absolute;margin-left: 50%;" id="cuadrito<%= i %>" notaid="<%= notita.getId_nota().toString() %>"></div>
-                                            <textarea style="width: 100%;" rows="5"><%= notita.getContenido() %></textarea>
-                                        </div>
-                                    </div>
-                        <%
-                                    i++;
+                <div class="container">
+                    <%
+                        if (!listanotas.isEmpty()) {
+                            
+                            int count = 0;
+                            int size = listanotas.size();
+                            int rows = (int)Math.ceil((float)size / 3.0);
+                            for (int i = 0; i < rows; i++) {
+                    %>
+                    <div class="row">
+                    <%          
+                                for (int j = 0; j < 3; j++) {
+                                    if (count >= size) break;
+                                    Notas notita = listanotas.get(count);
+                    %>
+                        <div class="col-12 col-md-6 col-lg-4">
+                            <div class="card" style="">
+                                <div class="card-body">
+                                    <i status="false" index="<%= count %>" class="supreme fa-solid fa-ellipsis" style="position:absolute; top: 20px; right: 20px;"></i>
+                                    <h3 class="card-title"><%= notita.getTitulo() %></h3>
+                                    <div style="padding-top: 0;z-index: 100; position: absolute;margin-left: 50%;" id="cuadrito<%= count %>" notaid="<%= notita.getId_nota().toString() %>"></div>
+                                    <textarea style="width: 100%;" rows="5" disabled><%= notita.getContenido() %></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    <%
+                                    count++;
+                                    
                                 }
-                            }
-                        %>
+                    %>
                     </div>
+                    <%
+                            }
+                        }
+                    %>
                 </div>
-
             </div>
                     
             <%
@@ -91,7 +101,23 @@
                 }    
             %>
             
+        
         </div>
+    </div>
+            
+    <!--Footer-->
+
+    <div class="container-footer">
+        <footer>
+            <div class="redes-footer">
+                <a href="#"><i class="fab fa-facebook ico-redes-footer"></i></a>
+                <a href="#"><i class="fab fa-instagram ico-redes-footer"></i></a>
+                <a href="#"><i class="fab fa-youtube ico-redes-footer"></i></a>
+            </div>
+            <hr>
+            <h4>NOTAS PARA TODOS</h4>
+            <h4>Todos los derechos reservados.</h4>
+        </footer>
     </div>
 
         <script src="js/lib/jquery-3.6.0.min.js"></script>

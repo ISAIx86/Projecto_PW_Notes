@@ -43,8 +43,12 @@ public class MainPage extends HttpServlet {
         Usuario usr = (Usuario)session.getAttribute("user");
         NotasDAO notdao = new NotasDAO();
         List<Notas> lista = notdao.ConsultarNotasUsuario(UUID.fromString(usr.getId_usuario()), 1, 10);
+        int total_notas = notdao.CantidadNotas(UUID.fromString(usr.getId_usuario()));
+        float divider = (float)total_notas / 10;
+        int paginas = (int) Math.ceil(divider);
         
         request.setAttribute("notelist", lista);
+        request.setAttribute("maxpages", paginas);
         
         request.getRequestDispatcher("Main_Page.jsp").forward(request, response);
         

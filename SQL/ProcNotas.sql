@@ -119,7 +119,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `cantidad_notas_usuario`(
 BEGIN
 
 	select
-		count(*)
+		count(*) as "Total"
 	from notas where
 		id_usuario = uuid_to_bin(_id_usuario);
 

@@ -6,6 +6,7 @@
 <%
     Usuario user = (Usuario)session.getAttribute("user");
     List<Notas> listanotas = (List<Notas>)request.getAttribute("notelist");
+    int total_paginas = (int)request.getAttribute("maxpages");
 %>
 
 <!DOCTYPE html>
@@ -71,7 +72,27 @@
                 </div>
 
             </div>
+                    
+            <%
+                if (total_paginas > 1) {
+            %>
+            
+            <div id="paginacion" class="row">
+                <div class="col text-center">
+                    <button id="btn_prevpaga" class="btn btn-secondary"><i class="fa-solid fa-arrow-left"></i></button>
+                </div>
+                <div class="col text-center"><h4 id="lb_pag" current="1" maxpag="<%= total_paginas %>"> Pagina 1 / <%= total_paginas %> </h4></div>
+                <div class="col text-center">
+                    <button id="btn_nextpag" class="btn btn-secondary"><i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </div>
+            
+            <%
+                }    
+            %>
+            
         </div>
+    </div>
 
         <script src="js/lib/jquery-3.6.0.min.js"></script>
         <script src="https://kit.fontawesome.com/a4552126f3.js" crossorigin="anonymous"></script>

@@ -1,4 +1,8 @@
 $(document).ready(function () {
+
+    var currpag = $('#lb_pag').attr('current');
+    var maxpages = $('#lb_pag').attr('maxpag');
+
     let validador1 = false;
     let validador2 = false;
     let validador3 = false;
@@ -106,6 +110,52 @@ $(document).ready(function () {
             console.log("Por qué valio chettos:" + textEstado);
         });
     });
+
+    $(document).on("click", "#btn_prevpaga", function(e) {
+        if (currpag > 1) {
+            currpag--;
+            $('#lb_pag').attr('current', currpag)
+            $('#lb_pag').text("Pagina " + currpag + " / " + maxpages)
+            $.ajax({
+                data: {currentPage: currpag, maxPage: maxpages},
+                type: "GET",
+                dataType: "json",
+                url: "MainPage"
+            }).done(function(data){
+                if (data.resultado === true) {
+                    alert(data.razon);
+                }
+                else {
+                    alert(data.razon);
+                }
+            }).fail(function(jqXHR, textEstado) {
+                console.log("Por qué valio chettos:" + textEstado);
+            });
+        }
+    })
+
+    $(document).on("click", "#btn_nextpag", function(e) {
+        if (currpag < maxpages) {
+            currpag++;
+            $('#lb_pag').attr('current', currpag)
+            $('#lb_pag').text("Pagina " + currpag + " / " + maxpages)
+            $.ajax({
+                data: {currentPage: currpag, maxPage: maxpages},
+                type: "POST",
+                dataType: "json",
+                url: "MainPage"
+            }).done(function(data){
+                if (data.resultado === true) {
+                    alert(data.razon);
+                }
+                else {
+                    alert(data.razon);
+                }
+            }).fail(function(jqXHR, textEstado) {
+                console.log("Por qué valio chettos:" + textEstado);
+            });
+        }
+    })
     
 });
 

@@ -113,6 +113,26 @@ public class NotasDAO {
         return null;
     }
     
+    public int CantidadNotas(UUID id_usuario) {
+        if (!getConnection())
+            return -1;
+        try {
+            CallableStatement stmt = conn.prepareCall("call cantidad_notas_usuario(?);");
+            stmt.setString(1, id_usuario.toString());
+            ResultSet rs = stmt.executeQuery();
+            while(rs.next()) {
+                return rs.getInt("Total");
+            }
+        }
+        catch (Exception e) {
+            System.out.println(e);
+        }
+        finally {
+            closeConnection();
+        }
+        return -1;
+    }
+    
     public Notas ConsultarNota(UUID id_nota) {
         if (!getConnection())
             return null;

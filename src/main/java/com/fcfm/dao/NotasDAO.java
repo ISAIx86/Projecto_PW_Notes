@@ -2,8 +2,6 @@ package com.fcfm.dao;
 
 import com.fcfm.quicknotes.DbConnection;
 import com.fcfm.models.Notas;
-import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
 import java.sql.Connection;
 import java.util.UUID;
 import java.util.List;

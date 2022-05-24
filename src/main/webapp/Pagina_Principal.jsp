@@ -10,7 +10,7 @@
 %>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
@@ -45,7 +45,7 @@
                 <div id="insert_new_note">
                 </div>
 
-                <div class="container">
+                <div class="container" id="notas_container">
                     <%
                         if (!listanotas.isEmpty()) {
                             

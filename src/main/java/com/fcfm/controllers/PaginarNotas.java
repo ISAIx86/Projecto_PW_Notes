@@ -3,15 +3,15 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 package com.fcfm.controllers;
+
 import com.fcfm.dao.NotasDAO;
-import java.util.List;
 import com.fcfm.models.Notas;
 import com.fcfm.models.Usuario;
 import com.google.gson.Gson;
-
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashMap;
+import java.util.List;
 import java.util.UUID;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -24,8 +24,8 @@ import javax.servlet.http.HttpSession;
  *
  * @author alexi
  */
-@WebServlet(name = "MainPage", urlPatterns = {"/MainPage"})
-public class MainPage extends HttpServlet {
+@WebServlet(name = "PaginarNotas", urlPatterns = {"/PaginarNotas"})
+public class PaginarNotas extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,19 +38,6 @@ public class MainPage extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        String str_currentpag = request.getParameter("currpag");
-        Usuario usr = (Usuario)session.getAttribute("user");
-        NotasDAO notdao = new NotasDAO();
-        List<Notas> lista = notdao.ConsultarNotasUsuario(UUID.fromString(usr.getId_usuario()), 1, 10);
-        int total_notas = notdao.CantidadNotas(UUID.fromString(usr.getId_usuario()));
-        float divider = (float)total_notas / 10;
-        int paginas = (int) Math.ceil(divider);
-        
-        request.setAttribute("notelist", lista);
-        request.setAttribute("maxpages", paginas);
-        
-        request.getRequestDispatcher("Pagina_Principal.jsp").forward(request, response);
         
     }
 
@@ -66,7 +53,29 @@ public class MainPage extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        HashMap result = new HashMap();
+        
+        HttpSession session = request.getSession();
+        Usuario usr = (Usuario)session.getAttribute("user");
+        NotasDAO notdao = new NotasDAO();
+        List<Notas> lista = notdao.ConsultarNotasUsuario(UUID.fromString(usr.getId_usuario()), Integer.parseInt(request.getParameter("currentPage")), 10);
+        int total_notas = notdao.CantidadNotas(UUID.fromString(usr.getId_usuario()));
+        float divider = (float)total_notas / 10;
+        int paginas = (int) Math.ceil(divider);
+        
+        if (lista != null) {
+            result.put("resultado", true);
+            result.put("maxpages", paginas);
+            result.put("notas", lista);
+        }
+        else {
+            result.put("resultado", false);
+        }
+        
+        String json = new Gson().toJson(result);
+        PrintWriter out = response.getWriter();
+        out.print(json);
+        out.flush();
     }
 
     /**
@@ -80,37 +89,7 @@ public class MainPage extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        HashMap result = new HashMap();
-        NotasDAO notdao = new NotasDAO();
-        HttpSession session = request.getSession();
-        
-        Usuario usr = (Usuario)session.getAttribute("user");
-        
-        Notas newnota = new Notas(
-                null,
-                UUID.fromString(usr.getId_usuario()),
-                request.getParameter("titulo"),
-                request.getParameter("contenido"),
-                null,
-                false
-        );
-        
-        boolean isCreated = notdao.NuevaNota(newnota);
-        
-        if(isCreated) {
-            result.put("resultado", true);
-            result.put("razon", "Nota creada!");
-        }
-        else {
-            result.put("resultado", false);
-            result.put("razon", "Algo salió mal.");
-        }
-        String json = new Gson().toJson(result);
-        PrintWriter out = response.getWriter();
-        out.print(json);
-        out.flush();
-        
+        processRequest(request, response);
     }
 
     /**

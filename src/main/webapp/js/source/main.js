@@ -119,11 +119,12 @@ $(document).ready(function () {
             $.ajax({
                 data: {currentPage: currpag, maxPage: maxpages},
                 type: "GET",
+                contentType: "application/x-www-form-urlencoded;charset=ISO-8859-15",
                 dataType: "json",
-                url: "MainPage"
+                url: "PaginarNotas"
             }).done(function(data){
                 if (data.resultado === true) {
-                    alert(data.razon);
+                    get_notas(data.notas);
                 }
                 else {
                     alert(data.razon);
@@ -141,12 +142,13 @@ $(document).ready(function () {
             $('#lb_pag').text("Pagina " + currpag + " / " + maxpages)
             $.ajax({
                 data: {currentPage: currpag, maxPage: maxpages},
-                type: "POST",
+                type: "GET",
+                contentType: "application/x-www-form-urlencoded;charset=ISO-8859-15",
                 dataType: "json",
-                url: "MainPage"
+                url: "PaginarNotas"
             }).done(function(data){
                 if (data.resultado === true) {
-                    alert(data.razon);
+                    get_notas(data.notas);
                 }
                 else {
                     alert(data.razon);
@@ -159,19 +161,39 @@ $(document).ready(function () {
     
 });
 
-function get_notas() {
-
+function get_notas(notaarray) {
+    
+    $("#notas_container").html("");
     let str = "";
-    let ejemplo_tamaño_notas = 2;
-
-    for (let i = 0; i < ejemplo_tamaño_notas; i++) {
-
-        str += `
-        <div class="container">
-            <i  status="false" id=`+ i + ` class="supreme fa-solid fa-ellipsis"></i>
-            <div style="padding-top: 0;z-index: 100; position: absolute;margin-left: 50%;" id="cuadrito`+ i + `"></div>
-            <textarea placeholder=`+ (1 + i) + ` name="" id="" cols="30" rows="1"></textarea>
-        </div>`;
+    
+    if (notaarray != null) {
+        let count = 0;
+        const size = notaarray.length;
+        const rows = Math.ceil(size / 3.0);
+        for (let i = 0; i < rows; i++) {
+            str += `
+                <div class="row">
+            `;
+            for (let j = 0; j < 3; j++) {
+                if (count >= size) break;
+                str += `
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <div class="card" style="">
+                            <div class="card-body">
+                                <i status="false" index="`+count+`" class="supreme fa-solid fa-ellipsis" style="position:absolute; top: 20px; right: 20px;"></i>
+                                <h3 class="card-title">`+notaarray[count].titulo+`</h3>
+                                <div style="padding-top: 0;z-index: 100; position: absolute;margin-left: 50%;" id="cuadrito`+count+`" notaid="`+notaarray[count].id_nota+`"></div>
+                                <textarea style="width: 100%;" rows="5" disabled>`+notaarray[count].contenido+`</textarea>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                count++;
+            }
+            str += `
+                </div>
+            `;
+        }
     }
-    $("#get_my_notes").html(str);
+    $("#notas_container").html(str);
 }

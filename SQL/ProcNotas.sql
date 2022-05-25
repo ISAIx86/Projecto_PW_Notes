@@ -121,7 +121,8 @@ BEGIN
 	select
 		count(*) as "Total"
 	from notas where
-		id_usuario = uuid_to_bin(_id_usuario);
+		id_usuario = uuid_to_bin(_id_usuario) and
+        activo = 1;
 
 END$$
 DELIMITER ;
@@ -170,7 +171,7 @@ BEGIN
 		'select
 			bin_to_uuid(id_nota) as ID,
 			bin_to_uuid(id_usuario) as UserID,
-			fecha_creacion as "Fecha de creacion",
+			fecha_creacion,
 			titulo as Titulo,
 			contenido as Contenido,
 			activo as Activo

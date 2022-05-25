@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.sql.Timestamp;
 import java.sql.CallableStatement;
 import java.sql.ResultSet;
+import java.time.LocalDateTime;
 
 public class NotasDAO {
     
@@ -99,6 +100,78 @@ public class NotasDAO {
                 );
                 returnlist.add(usn);
                 System.out.println(usn.toString());
+            }
+            return returnlist;
+        }
+        catch (Exception e) {
+            System.out.println(e);
+        }
+        finally {
+            closeConnection();
+        }
+        return null;
+    }
+    
+    public List<Notas> BusquedaAvanzada(UUID id_usuario, int pag, int size, String contenido, LocalDateTime startdate, LocalDateTime enddate) {
+        if (!getConnection())
+            return null;
+        try {
+            CallableStatement stmt = conn.prepareCall("call busqueda_notas(?, ?, ?, ?, ?, ?);");
+            stmt.setString(1, id_usuario.toString());
+            stmt.setInt(2, pag);
+            stmt.setInt(3, size);
+            stmt.setString(4, contenido);
+            stmt.setTimestamp(5, Timestamp.valueOf(startdate));
+            stmt.setTimestamp(6, Timestamp.valueOf(enddate));
+            ResultSet rs = stmt.executeQuery();
+            List<Notas> returnlist = new ArrayList<Notas>();
+            while(rs.next()) {
+                Timestamp ts = rs.getTimestamp("fecha_creacion");
+                Notas usn = new Notas(
+                        UUID.fromString(rs.getString("ID")),
+                        UUID.fromString(rs.getString("UserID")),
+                        rs.getString("Titulo"),
+                        rs.getString("Contenido"),
+                        new java.util.Date(ts.getTime()),
+                        rs.getBoolean("Activo")
+                );
+                returnlist.add(usn);
+                System.out.println(usn.toString());
+            }
+            return returnlist;
+        }
+        catch (Exception e) {
+            System.out.println(e);
+        }
+        finally {
+            closeConnection();
+        }
+        return null;
+    }
+    
+    public List<Notas> BusquedaAvanzada(UUID id_usuario, int pag, int size, String contenido) {
+        if (!getConnection())
+            return null;
+        try {
+            CallableStatement stmt = conn.prepareCall("call busqueda_notas(?, ?, ?, ?, ?, ?);");
+            stmt.setString(1, id_usuario.toString());
+            stmt.setInt(2, pag);
+            stmt.setInt(3, size);
+            stmt.setString(4, contenido);
+            stmt.setNull(5, java.sql.Types.TIMESTAMP);
+            stmt.setNull(6, java.sql.Types.TIMESTAMP);
+            ResultSet rs = stmt.executeQuery();
+            List<Notas> returnlist = new ArrayList<Notas>();
+            while(rs.next()) {
+                Notas usn = new Notas(
+                        UUID.fromString(rs.getString("ID")),
+                        UUID.fromString(rs.getString("UserID")),
+                        rs.getString("Titulo"),
+                        rs.getString("Contenido"),
+                        null,
+                        rs.getBoolean("Activo")
+                );
+                returnlist.add(usn);
             }
             return returnlist;
         }

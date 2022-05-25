@@ -32,8 +32,10 @@
             </div>
 
             <div class="izquierdo_2">
-                <input class="buscador" type="text" placeholder="¿Que Estas Buscando?"/>
-                <input class="btn btn-secondary" id="btn_busqueda_avanzada" type="button" value="Busqueda Avanzada" />
+                <form action="BusquedaAvanzada" method="get">
+                    <input class="buscador" name="contenido" type="text" placeholder="¿Que Estas Buscando?"/>
+                    <input class="btn btn-secondary" id="btn_busqueda_avanzada" type="submit" value="Busqueda Avanzada" />
+                </form>
                 <input class="btn btn-secondary" id="btn_nueva_nota" type="button" value="Nueva Nota"/>
                 <input class="btn btn-secondary" id="btn_editar_prefil" type="button" value="Editar perfil"/>
                 <a href="CerrarUsuario" class="btn btn-secondary">Salir</a>
@@ -63,7 +65,7 @@
                         <div class="col-12 col-md-6 col-lg-4">
                             <div class="card" style="">
                                 <div class="card-body">
-                                    <i status="false" index="<%= count %>" class="supreme fa-solid fa-ellipsis" style="position:absolute; top: 20px; right: 20px;"></i>
+                                    <i status="false" edit="false" index="<%= count %>" class="supreme fa-solid fa-ellipsis" style="position:absolute; top: 20px; right: 20px;"></i>
                                     <h3 class="card-title"><%= notita.getTitulo() %></h3>
                                     <div style="padding-top: 0;z-index: 100; position: absolute;margin-left: 50%;" id="cuadrito<%= count %>" notaid="<%= notita.getId_nota().toString() %>"></div>
                                     <textarea style="width: 100%;" rows="5" disabled><%= notita.getContenido() %></textarea>

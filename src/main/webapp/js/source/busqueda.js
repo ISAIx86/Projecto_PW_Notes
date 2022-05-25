@@ -1,41 +1,11 @@
-$(document).ready(function () {
+$(document).ready(function(){
 
     var currpag = $('#lb_pag').attr('current');
     var maxpages = $('#lb_pag').attr('maxpag');
 
-    let validador2 = false;
-
-    $(document).on('click', '#btn_nueva_nota', function (e) {
-        e.preventDefault();
-
-        if (validador2 == false) {
-            validador2 = true;
-
-            let container = document.querySelector("#insert_new_note");
-            container.classList.add("container");
-
-            let str = `
-                <div class="row my-3 mx-5">
-                    <div class="col my-3">
-                        <div class="card" style="width: 30rem;">
-                            <div class="card-body">
-                                <input class="card-title" type="text" id="txt_titulo" name="titulo" placeholder="Título" style="width:100%;">
-                                <textarea placeholder="Tu Nueva Nota" id="txt_contenido" name="contenido" cols="30" rows="3" style="width:100%;"></textarea>
-                                <input id="btn_creanota" class="btn btn-primary" type="submit" value="Guardar" style="width:100%;"></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            `;
-            $("#insert_new_note").html(str);
-        } else if (validador2 === true) {
-
-            $("#insert_new_note").html("");
-            validador2 = false;
-            $("#insert_new_note").removeClass("container");
-        }
-
-    });
+    var byContent = $('#Palabra').val();
+    var initDate = $('#FechaInicial').val();
+    var finalDate = $('#FechaFinal').val();
 
     $(document).on('click', '.supreme', function (e) {
         e.preventDefault();
@@ -151,13 +121,13 @@ $(document).ready(function () {
                 if (data.pagvacia === true) {
                     currpag = data.currentpag;
                     maxpages = data.maxpags;
-                    get_notas(data.listanotas);
                     if (maxpages > 1) {
-                        $('#lb_pag').attr('current', currpag)
-                        $('#lb_pag').text("Pagina " + currpag + " / " + maxpages);
+                        $('#paginacion').html("");
                     }
                     else {
-                        $('#paginacion').html("");
+                        $('#lb_pag').attr('current', currpag)
+                        $('#lb_pag').text("Pagina " + currpag + " / " + maxpages);
+                        get_notas(data.listanotas);
                     }
                 }
                 else {
@@ -173,21 +143,29 @@ $(document).ready(function () {
         card.children('div').html("");
         card.children('i').attr("status", "false");
     })
-    
-    $(document).on("click", '#btn_creanota', function (e) {
-        let card = $(this).parent();
-        let ntitulo = card.children('#txt_titulo').val();
-        let ncont = card.children('#txt_contenido').val();
-        e.preventDefault();
+
+    $(document).on('click', '#Btn-Busqueda', function() {
+        byContent = $('#Palabra').val();
+        initDate = $('#FechaInicial').val();
+        finalDate = $('#FechaFinal').val();
         $.ajax({
-            data: {titulo: ntitulo, contenido: ncont},
-            type: "POST",
+            data: {currentPage: 1, contenido: byContent, startDate: initDate, endDate: finalDate},
+            type: "GET",
+            contentType: "application/x-www-form-urlencoded;charset=ISO-8859-15",
             dataType: "json",
-            url: "MainPage"
+            url: "BusquedaAvanzadaFiltros"
         }).done(function(data){
             if (data.resultado === true) {
-                alert(data.razon);
-                window.location.replace("MainPage");
+                var currpag = 1;
+                var maxpages = data.maxpages;
+                get_notas(data.notasresult);
+                if (maxpages < 1) {
+                    $('#paginacion').html("");
+                }
+                else {
+                    $('#lb_pag').attr('current', currpag)
+                    $('#lb_pag').text("Pagina " + currpag + " / " + maxpages)
+                }
             }
             else {
                 alert(data.razon);
@@ -195,22 +173,22 @@ $(document).ready(function () {
         }).fail(function(jqXHR, textEstado) {
             console.log("Por qué valio chettos:" + textEstado);
         });
-    });
+    })
 
-    $(document).on("click", "#btn_prevpaga", function() {
+    $(document).on("click", "#btn_prevpag", function() {
         if (currpag > 1) {
             currpag--;
             $('#lb_pag').attr('current', currpag)
             $('#lb_pag').text("Pagina " + currpag + " / " + maxpages)
             $.ajax({
-                data: {currentPage: currpag, maxPage: maxpages},
+                data: {currentPage: currpag, contenido: byContent, startDate: initDate, endDate: finalDate},
                 type: "GET",
                 contentType: "application/x-www-form-urlencoded;charset=ISO-8859-15",
                 dataType: "json",
-                url: "PaginarNotas"
+                url: "BusquedaAvanzadaFiltros"
             }).done(function(data){
                 if (data.resultado === true) {
-                    get_notas(data.notas);
+                    get_notas(data.notasresult);
                 }
                 else {
                     alert(data.razon);
@@ -222,20 +200,19 @@ $(document).ready(function () {
     })
 
     $(document).on("click", "#btn_nextpag", function() {
-
         if (currpag < maxpages) {
             currpag++;
-            $('#lb_pag').attr('current', currpag)
-            $('#lb_pag').text("Pagina " + currpag + " / " + maxpages)
+            $('#lb_pag').attr('current', currpag);
+            $('#lb_pag').text("Pagina " + currpag + " / " + maxpages);
             $.ajax({
-                data: {currentPage: currpag, maxPage: maxpages},
+                data: {currentPage: currpag, contenido: byContent, startDate: initDate, endDate: finalDate},
                 type: "GET",
                 contentType: "application/x-www-form-urlencoded;charset=ISO-8859-15",
                 dataType: "json",
-                url: "PaginarNotas"
+                url: "BusquedaAvanzadaFiltros"
             }).done(function(data){
                 if (data.resultado === true) {
-                    get_notas(data.notas);
+                    get_notas(data.notasresult);
                 }
                 else {
                     alert(data.razon);
@@ -245,7 +222,7 @@ $(document).ready(function () {
             });
         }
     })
-    
+
 });
 
 function get_notas(notaarray) {

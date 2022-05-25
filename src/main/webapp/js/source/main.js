@@ -62,15 +62,15 @@ $(document).ready(function () {
                 <div class="cuadrito">
                     <div class="pareja">
                         <i  class="guardar iconos fa-solid fa-floppy-disk"></i>
-                        <h5>guardar nota</h5>
+                        <h5>Guardar nota</h5>
                     </div>
                     <div class="pareja">
                         <i class="iconos fa-solid fa-arrow-up-right-from-square"></i>
-                        <h5>abrir nota</h5>
+                        <h5>Abrir nota</h5>
                     </div>
                     <div class="pareja">
                         <i class="eliminar iconos fa-solid fa-trash-can"></i>
-                        <h5>eliminar nota</h5>
+                        <h5>Eliminar nota</h5>
                     </div>
                 </div>
             `;

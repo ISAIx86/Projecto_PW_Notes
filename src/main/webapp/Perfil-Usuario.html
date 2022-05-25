@@ -5,10 +5,10 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Notas</title>
+    <title>Perfil de Usario</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/Perfil-Usuario.css">
 </head>
 
 <body>
@@ -33,36 +33,34 @@
 
 
         <div class="derecho">
-            <div id="get_my_notes">
-                <div id="insert_new_note">
 
+            <section class="Perfil-Usario">
+                <div class="Contenido-Formulario">
+                    <ul class="Lista-de-datos"></ul>
+                        <form action="" class="DatosUsario" id="Formulario-Usuario">
+
+                            <h6>Nombre:</h6>
+                            <input type="text" placeholder="Nombres" id="Nombres" name="nombres" maxlength="50" required disabled>
+                            <h6>Apellido:</h6>
+                            <input type="text" placeholder="Apellidos" id="Apelldios" name="apelldios" maxlength="50" required disabled>
+                            <h6>Correo:</h6>
+                            <input type="email" placeholder="Email" id="Email" name="email" maxlength="50" required disabled>
+                            <h6>Edad:</h6>
+                            <input type="text" placeholder="Edad" id="Edad" name="edad" maxlength="50" required disabled>
+                            <h6>Cumpleaños:</h6>
+                            <input type="date" placeholder="Cumpleaños" id="Cumpleaños" name="cumpleaños" required disabled>
+                            <h6>Contraseña:</h6>
+                            <input type="text" placeholder="Contraseña" id="Contrasena" name="contrasena" maxlength="50" required disabled>
+                            <h6>Confirmar Contraseña:</h6>
+                            <input type="text" placeholder="Confirmar Contraseña" id="Contrasena2" name="contrasena2" maxlength="50" required disabled>
+
+                            <button type="submit" id="BUTTOM-Editar">Editar</button>
+                            <button type="submit" id="BUTTOM-Guardar">Guardar</button>
+
+                        </form>
+                    </ul>
                 </div>
-
-                <div class="row my-3 mx-5">
-                    <div class="col my-3">
-                        <div class="card" style="width: 18rem;">
-                            <div class="card-body">
-                                <i status="false" index="1" class="supreme fa-solid fa-ellipsis" style="position:absolute; top: 20px; right: 20px;"></i>
-                                <h3>Titulo</h3>
-                                <div style="padding-top: 0;z-index: 100; position: absolute;margin-left: 50%;" id="cuadrito1" notaid=""></div>
-                                <textarea style="width: 100%;" rows="5"></textarea>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-
-            <div id="paginacion" class="row">
-                <div class="col text-center">
-                    <button class="btn btn-secondary"><i class="fa-solid fa-arrow-left"></i></button>
-                </div>
-                <div class="col text-center"><h5> Pagina 1 / 1 </h5></div>
-                <div class="col text-center">
-                    <button class="btn btn-secondary"><i class="fa-solid fa-arrow-right"></i></button>
-                </div>
-            </div>
-
+            </section>
         </div>
 
     </div>
@@ -94,7 +92,7 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
             integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
             crossorigin="anonymous"></script>
-        <script src="js/source/main.js"></script>
+        <script src="js/source/Registro-Usuario.js"></script>
 </body>
 
 </html>

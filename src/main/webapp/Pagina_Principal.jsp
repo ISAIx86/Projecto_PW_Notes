@@ -27,13 +27,15 @@
     <div class="menu">
         <div class="izquierdo">
             <div class="izquierdo_1">
-                <img src="Imagenes/NotasParaTodos.png" alt="">
+                <a href="MainPage" style="text-align: center;"><img src="img/NotasParaTodos.png" alt=""></a>
+                <br>
                 <h5>Usuario: "Me llamo <%= user.getUsername() %>"</h5>
             </div>
 
             <div class="izquierdo_2">
-                <form action="BusquedaAvanzada" method="get">
-                    <input class="buscador" name="contenido" type="text" placeholder="¿Que Estas Buscando?"/>
+                <form id="form_busqueda" action="BusquedaAvanzada" method="get">
+                    <input id="barra_busqueda" class="buscador" name="contenido" type="text" placeholder="¿Que Estas Buscando?"/>
+                    <br/>
                     <input class="btn btn-secondary" id="btn_busqueda_avanzada" type="submit" value="Busqueda Avanzada" />
                 </form>
                 <input class="btn btn-secondary" id="btn_nueva_nota" type="button" value="Nueva Nota"/>

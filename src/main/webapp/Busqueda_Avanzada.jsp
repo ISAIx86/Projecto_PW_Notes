@@ -26,13 +26,14 @@
 
             <div class="izquierdo">
                 <div class="izquierdo_1">
-                    <img src="Imagenes/NotasParaTodos.png" alt="">
+                    <a href="MainPage" style="text-align: center;"><img src="img/NotasParaTodos.png" alt=""></a>
                     <br>
                     <h5>Usuario: "Me llamo <%= user.getUsername() %>"</h5>
                 </div>
     
                 <div class="izquierdo_2">
-                    <input class="btn btn-secondary" id="btn_editar_prefil" type="button" value="Perfil de Usario" />
+                    <a href="MainPage" class="btn btn-secondary">Menú principal</a>
+                    <input class="btn btn-secondary" id="btn_editar_prefil" type="button" value="Editar perfil"/>
                     <input class="btn btn-secondary" id="btn_salir" type="button" value="Salir"/>
                 </div>
             </div>
@@ -43,6 +44,7 @@
                 <section class="Busqueda-Avanzada">
                     <div class="Busqueda-Estructura">
                         <ul class="lista-datos">
+                            <div class="Busqueda-estructuras">
                                 <h6>Busqueda Avanzada:</h6>
                                 <input type="text" placeholder="Escribe una palabra" id="Palabra" name="palabra" maxlength="30" value="<%= bycontent %>">
     
@@ -53,6 +55,7 @@
                                 <input type="date"  id="FechaFinal" name="fechafinal" maxlength="30" >
 
                                 <button class="btn btn-secondary" id="Btn-Busqueda">Buscar</button>
+                            </div>
                         </ul>
                     </div>
                 </section>

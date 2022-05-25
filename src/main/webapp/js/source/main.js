@@ -175,26 +175,31 @@ $(document).ready(function () {
     })
     
     $(document).on("click", '#btn_creanota', function (e) {
+        e.preventDefault();
         let card = $(this).parent();
         let ntitulo = card.children('#txt_titulo').val();
         let ncont = card.children('#txt_contenido').val();
-        e.preventDefault();
-        $.ajax({
-            data: {titulo: ntitulo, contenido: ncont},
-            type: "POST",
-            dataType: "json",
-            url: "MainPage"
-        }).done(function(data){
-            if (data.resultado === true) {
-                alert(data.razon);
-                window.location.replace("MainPage");
-            }
-            else {
-                alert(data.razon);
-            }
-        }).fail(function(jqXHR, textEstado) {
-            console.log("Por qué valio chettos:" + textEstado);
-        });
+        if (ntitulo !== "" & ncont !== "") {
+            $.ajax({
+                data: {titulo: ntitulo, contenido: ncont},
+                type: "POST",
+                dataType: "json",
+                url: "MainPage"
+            }).done(function(data){
+                if (data.resultado === true) {
+                    alert(data.razon);
+                    window.location.replace("MainPage");
+                }
+                else {
+                    alert(data.razon);
+                }
+            }).fail(function(jqXHR, textEstado) {
+                console.log("Por qué valio chettos:" + textEstado);
+            });
+        }
+        else {
+            alert("Escriba algo en la nota. El título y el contenido no deben estar vacíos.");
+        }
     });
 
     $(document).on("click", "#btn_prevpaga", function() {
@@ -243,6 +248,18 @@ $(document).ready(function () {
             }).fail(function(jqXHR, textEstado) {
                 console.log("Por qué valio chettos:" + textEstado);
             });
+        }
+    })
+
+    $(document).on('submit', "#form_busqueda", function(e) {
+        e.preventDefault();
+        let busqueda = $('#barra_busqueda').val()
+        const form = $('#form_busqueda')[0];
+        if (busqueda !== "") {
+            form.submit();
+        }
+        else {
+            alert("Ingrese algo en la barra de búsqueda.");
         }
     })
     

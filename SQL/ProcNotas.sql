@@ -171,7 +171,7 @@ BEGIN
 		'select
 			bin_to_uuid(id_nota) as ID,
 			bin_to_uuid(id_usuario) as UserID,
-			fecha_creacion,
+			fecha_creacion as "Fecha de creacion",
 			titulo as Titulo,
 			contenido as Contenido,
 			activo as Activo
@@ -180,8 +180,6 @@ BEGIN
             string_contain, start_date, end_date, ' and activo = 1 ',
 		'order by fecha_creacion desc limit ', pagem, ', ',  _size, ';'
     );
-    
-    select @qry_string;
     
      prepare qry from @qry_string;
 	 execute qry;

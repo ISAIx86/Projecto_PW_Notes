@@ -43,9 +43,6 @@
                 <section class="Busqueda-Avanzada">
                     <div class="Busqueda-Estructura">
                         <ul class="lista-datos">
-    
-                            <form action="" class="Busqueda-estructuras" id="FormBusqueda">
-                            
                                 <h6>Busqueda Avanzada:</h6>
                                 <input type="text" placeholder="Escribe una palabra" id="Palabra" name="palabra" maxlength="30" value="<%= bycontent %>">
     
@@ -55,9 +52,7 @@
                                 <h6>Rango de Fecha Final:</h6>
                                 <input type="date"  id="FechaFinal" name="fechafinal" maxlength="30" >
 
-                                <button type="submit" id="Btn-Busqueda">Buscar</button>
-                                
-                            </form>
+                                <button class="btn btn-secondary" id="Btn-Busqueda">Buscar</button>
                         </ul>
                     </div>
                 </section>

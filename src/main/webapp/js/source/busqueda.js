@@ -149,7 +149,7 @@ $(document).ready(function(){
         initDate = $('#FechaInicial').val();
         finalDate = $('#FechaFinal').val();
         $.ajax({
-            data: {currentPage: 1, contenido: byContent, startDate: initDate, endDate: finalDate},
+            data: {contenido: byContent, startDate: initDate, endDate: finalDate},
             type: "GET",
             contentType: "application/x-www-form-urlencoded;charset=ISO-8859-15",
             dataType: "json",
@@ -159,12 +159,12 @@ $(document).ready(function(){
                 var currpag = 1;
                 var maxpages = data.maxpages;
                 get_notas(data.notasresult);
-                if (maxpages < 1) {
-                    $('#paginacion').html("");
+                if (maxpages > 1) {
+                    $('#lb_pag').attr('current', currpag)
+                    $('#lb_pag').text("Pagina " + currpag + " / " + maxpages);
                 }
                 else {
-                    $('#lb_pag').attr('current', currpag)
-                    $('#lb_pag').text("Pagina " + currpag + " / " + maxpages)
+                    $('#paginacion').html("");
                 }
             }
             else {

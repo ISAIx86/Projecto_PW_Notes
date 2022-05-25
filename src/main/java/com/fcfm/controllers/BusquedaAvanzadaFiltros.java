@@ -67,50 +67,83 @@ public class BusquedaAvanzadaFiltros extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
         HashMap result = new HashMap();
         NotasDAO notdao = new NotasDAO();
         HttpSession session = request.getSession();
         
         Usuario usr = (Usuario)session.getAttribute("user");
         String str_currpag = request.getParameter("currentPage");
+        String str_cont = request.getParameter("contenido");
         int currpag = 1;
         if (str_currpag != null)
             currpag = Integer.parseInt(str_currpag);
-        String str_cont = request.getParameter("contenido");
         if (str_cont == null)
             str_cont = "";
+        
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         String str_startdate = request.getParameter("startDate");
-        LocalDateTime startDate;
-        if (str_startdate != null)
-            startDate = LocalDateTime.parse(str_startdate);
-        else startDate = null;
         String str_enddate = request.getParameter("endDate");
-        LocalDateTime endDate;
-        if (str_enddate != null)
-            endDate = LocalDateTime.parse(str_enddate);
-        else endDate = null;
-                
-        List<Notas> resultset = notdao.BusquedaAvanzada(
+        boolean hasStartDate = false;
+        boolean hasEndDate = false;
+        LocalDateTime startDate = null;
+        LocalDateTime endDate = null;
+        if (!str_startdate.contentEquals("")) {
+            startDate = LocalDateTime.parse(str_startdate + " 00:00:00", formatter);
+            hasStartDate = true;
+        }
+        if (!str_enddate.contentEquals("")) {
+            endDate = LocalDateTime.parse(str_enddate + " 23:59:59", formatter);
+            hasEndDate = true;
+        }
+        
+        List<Notas> resultset = null;
+        if (hasStartDate & hasEndDate) {
+            resultset = notdao.BusquedaAvanzada(
                 UUID.fromString(usr.getId_usuario()),
                 currpag,
                 10,
                 str_cont,
                 startDate,
                 endDate
-        );
+            );
+        }
+        else if (hasStartDate) {
+            resultset = notdao.BusquedaAvanzada(
+                UUID.fromString(usr.getId_usuario()),
+                currpag,
+                10,
+                str_cont,
+                startDate
+            );
+        }
+        else if (hasEndDate) {
+            resultset = notdao.BusquedaAvanzada(
+                UUID.fromString(usr.getId_usuario()),
+                currpag,
+                10,
+                str_cont,
+                endDate,
+                ""
+            );
+        }
+        else {
+            resultset = notdao.BusquedaAvanzada(
+                UUID.fromString(usr.getId_usuario()),
+                currpag,
+                10,
+                str_cont
+            );
+        }
+        
         int total_notas = resultset.size();
         float divider = (float)total_notas / 10;
         int paginas = (int) Math.ceil(divider);
         
-        if (!resultset.isEmpty()) {
-            result.put("resultado", true);
-            result.put("maxpages", paginas);
-            result.put("notasresult", resultset);
-        }
-        else {
-            result.put("resultado", false);
-        }
+        result.put("resultado", true);
+        result.put("maxpages", paginas);
+        result.put("notasresult", resultset);
+        
         String json = new Gson().toJson(result);
         PrintWriter out = response.getWriter();
         out.print(json);
@@ -129,7 +162,7 @@ public class BusquedaAvanzadaFiltros extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        
     }
 
     /**

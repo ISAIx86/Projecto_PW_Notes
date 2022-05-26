@@ -8,12 +8,17 @@
 <%@page import="com.fcfm.models.Usuario"%>
 <%@page import="java.text.DateFormat"%>
 <%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.time.format.DateTimeFormatter"%>
+<%@page import="java.time.Period"%>
+<%@page import="java.time.LocalDate"%>
 <%
     Usuario user = (Usuario)session.getAttribute("user");
     Usuario data = (Usuario)request.getAttribute("userdata");
     DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
     String fechastring = df.format(data.getFecha_nac());
-    
+    DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    LocalDate fechanac = LocalDate.parse(fechastring, format);
+    Period edad = Period.between(fechanac, LocalDate.now());
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -37,6 +42,8 @@
                 <a href="MainPage" style="text-align: center;"><img src="img/NotasParaTodos.png" alt=""></a>
                 <br>
                 <h5>Usuario: "Me llamo <%= user.getUsername() %>"</h5>
+                <br>
+                <h5>Edad: <%= edad.getYears() %> </h5>
             </div>
             <div class="izquierdo_2">
                 <a href="MainPage" class="btn btn-secondary">Menú principal</a>

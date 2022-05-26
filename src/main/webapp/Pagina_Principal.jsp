@@ -39,7 +39,7 @@
                     <input class="btn btn-secondary" id="btn_busqueda_avanzada" type="submit" value="Busqueda Avanzada" />
                 </form>
                 <input class="btn btn-secondary" id="btn_nueva_nota" type="button" value="Nueva Nota"/>
-                <input class="btn btn-secondary" id="btn_editar_prefil" type="button" value="Editar perfil"/>
+                <a href="EditarPerfil" class="btn btn-secondary">Editar perfil</a>
                 <a href="CerrarUsuario" class="btn btn-secondary">Salir</a>
             </div>
         </div>

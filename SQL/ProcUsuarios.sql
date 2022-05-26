@@ -50,7 +50,6 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `editar_usuario`(
     in _apellidos		varchar(64),
     in _fecha_nac		date,
     in _email			varchar(64),
-    in _username		varchar(32),
     in _password		varchar(16)
 )
 begin
@@ -64,16 +63,17 @@ begin
 		id_usuario = uuid_to_bin(_id_usuario) and
         activo = 1;
 
-	if not exists (select 1 from usuarios where (correo_e = _email or username = _username) and id_usuario != _id_usuario and activo = 1) then
+	if not exists (select 1 from usuarios where (correo_e = _email) and id_usuario != _id_usuario and activo = 1) then
 		update usuarios set
-			correo_e = ifnull(_email, correo_e),
-            username = ifnull(_username, username)
+			correo_e = ifnull(_email, correo_e)
 		where
 			id_usuario = uuid_to_bin(_id_usuario) and
 			activo = 1;
 		select "updated_eu" as result;
 	else select "already_exists" as result;
     end if;
+    
+    select "normal_update" as result; 
     
 end
 $$ DELIMITER ;

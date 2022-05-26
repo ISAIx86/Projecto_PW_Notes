@@ -1,0 +1,238 @@
+body{
+    background-color: #000000;
+}
+
+:root {
+    --gris: #e1e1e1;
+    --verde: rgb(74, 220, 29);
+}
+
+img {
+    width: 80px;
+    border-radius: 50px;
+}
+
+input {
+    font-size: 20px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.buscador {
+    background: var(--gris);
+    border: none;
+    text-align: center;
+    border-radius: 25px;
+}
+
+h5 {
+    font-size: 20px;
+    color: #efefef;
+}
+
+/*-----------------------------------------------------------------*/
+.menu {
+    display: flex;
+    height: 100%;
+}
+
+.izquierdo {
+    background-color: rgb(15, 121, 148);
+    width: 25%;
+    padding-top: 50px;
+    padding-bottom: 674px;
+}
+
+.izquierdo_1 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+
+}
+
+.izquierdo .izquierdo_1 img{
+    width: 50%;
+    height: 100%;
+}
+
+.izquierdo_2 {
+    display: flex;
+    flex-direction: column;
+    gap: 30px; /*distancia de los input*/
+    justify-content: center;
+    margin-top: 20px;
+    padding: 5px 70px;
+}
+
+.izquierdo_2 input{
+    border-radius: 30;
+}
+
+.derecho {
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+}
+
+/*FORMULARIO*/
+
+.derecho .DatosUsario{
+    margin-left: 25%;
+    margin-top: 3%;
+    width: 50%; /*El tamaño (ancho) que ocupara de toda la pantalla*/
+    display: flex;
+    flex-wrap: wrap; /*los elementos "hijos" son obligados a permanecer en una misma línea o pueden fluir en varias líneas.*/
+    flex-direction: column;
+    margin-bottom: 25px;
+    padding: 1rem; /*Espacio entre el contenido del elemento y su borde*/
+    background-color: rgb(15, 121, 148); /*Color de fondo*/
+    border-radius: 15px; /*Hacer redondo el espacio de los datos de usuario*/
+}
+
+.derecho .Lista-de-datos{
+    width: 100%; /*El tamaño (ancho) que ocupara de toda la pantalla*/
+    list-style: none; /*Quita los puntos que marca cada datos del usuario*/
+    color: #fff; /*Color de las letras*/ 
+    padding: 0px 40px ; /*Espacio entre el contenido del elemento y su borde*/
+    margin-top: 10px;
+}
+
+.derecho .Lista-de-datos input{
+    width: 100%; /*El tamaño (ancho) que ocupara de toda la pantalla*/
+    height: 20%;
+    margin-top: 8px; /*Distancia entre la ultima caja del formulario*/
+    margin-bottom: 30px;
+    padding: 5px 10px; /*Espacio entre cuadros de texto y el espacio entre el texto desde el lado izquierdo*/
+    border: none; /* Quitar el border*/
+    background-color: #fff;
+    color: #000000; /*Color de la letra del boton*/
+    outline: none; /*Quitar el borde negro al escribir*/
+    border-radius:  5px 5px; /*Es para darle borde redondo*/
+
+    font-weight: 100px;
+    font-weight: 400; /*Quitar grosor del h3*/
+    font-size: 15px; /*Tamaño de la letra*/
+}
+
+.derecho form button{
+    width: 50%; /*El tamaño (ancho) que ocupara de toda la pantalla*/
+    margin-top: 20px; /*Distancia entre cada boton y la ultima caja de los datos*/
+    padding: 4px 0; /*Espacio entre el contenido del elemento y su borde*/
+    cursor: pointer;
+    margin-left: 25%;
+    background-color: #65727c;
+    border-radius: 5%;
+    border: none;
+    color: #fff;
+}
+
+/*Va a estar oculato el buttom*/
+#BUTTOM-Guardar{
+    display: none;
+}
+
+.derecho h6{
+    color: #fff;
+    margin-top: 2%;
+    margin-bottom: 2%;
+}
+
+
+.form-label-group small {
+    visibility: hidden;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    font-size: 15px;
+}
+.form-label-group.error small {
+    visibility: visible;
+    position: relative;
+    color: #e74c3c;
+}
+
+.form-label-group.error button[type="submit"] {
+    background-color: rgb(247, 43, 43);
+    border: 2px solid rgb(247, 43, 43);
+    font-size: 16px;
+    padding: 10px;
+}
+.form-label-group.success input {
+    border: 2px solid #28a745;
+}
+.form-label-group.error input {
+    border: 2px solid #e74c3c;
+}
+
+
+/*Footer - pie de pagina*/
+.container-footer{
+    width: 100%;
+    padding: 20px;
+    background: #313030;
+    
+}
+
+.container-footer footer{
+    max-width: 1200px;
+    margin: auto;
+}
+
+.container-footer footer .logo-footer{
+    text-align: center;
+}
+
+.container-footer footer .logo-footer img{
+    width: 100px;
+}
+
+.container-footer footer .redes-footer{
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.container-footer footer .redes-footer .ico-redes-footer{
+    font-size: 20px;
+    margin: 20px;
+    background: #efefef;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 100px;
+    color: #a2a2a2;
+}
+
+.container-footer footer .redes-footer .fa-facebook:hover{ /*hover es para que el cursor al pasar encima cambie de color*/ 
+    background: #415794;
+    color: #fff;
+}
+
+.container-footer footer .redes-footer .fa-instagram:hover{ /*hover es para que el cursor al pasar encima cambie de color*/ 
+    background: linear-gradient( to top right, #fcde30, #e9712a, #d2313b, #ae4198, #7540a1, #5443a8 );
+    color: #fff;
+}
+
+.container-footer footer .redes-footer .fa-youtube:hover{ /*hover es para que el cursor al pasar encima cambie de color*/ 
+    background: #ff0000;
+    color: #fff;
+}
+
+.container-footer footer hr{
+    margin-top: 20px;
+    border: none;
+    height: 2px;
+    background: #a8a8a87a;
+}
+
+.container-footer footer h4{
+    text-align: center;
+    margin-top: 40px;
+    color: #a8a8a87a;
+    font-weight: 100px;
+    font-weight: 400; /*Quitar grosor del h3*/
+    font-size: 15px; /*Tamaño de la letra*/
+}

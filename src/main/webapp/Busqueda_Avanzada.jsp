@@ -33,8 +33,8 @@
     
                 <div class="izquierdo_2">
                     <a href="MainPage" class="btn btn-secondary">Menú principal</a>
-                    <input class="btn btn-secondary" id="btn_editar_prefil" type="button" value="Editar perfil"/>
-                    <input class="btn btn-secondary" id="btn_salir" type="button" value="Salir"/>
+                    <a href="EditarPerfil" class="btn btn-secondary">Editar perfil</a>
+                    <a href="CerrarUsuario" class="btn btn-secondary">Salir</a>
                 </div>
             </div>
     

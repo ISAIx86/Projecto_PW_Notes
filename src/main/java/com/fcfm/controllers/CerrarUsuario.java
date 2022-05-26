@@ -60,7 +60,7 @@ public class CerrarUsuario extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         session.invalidate();
-        request.getRequestDispatcher("Inicio_Sesion.html").forward(request, response);
+        request.getRequestDispatcher("inicio_sesion.html").forward(request, response);
     }
 
     /**

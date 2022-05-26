@@ -63,18 +63,15 @@ public class UsuarioDAO {
         if (!new_usuario.ValidarCampos())
             return false;
         try {
-            CallableStatement stmt = conn.prepareCall("call editar_usuario(?, ?, ?, ?, ?, ?, ?, ?);");
+            CallableStatement stmt = conn.prepareCall("call editar_usuario(?, ?, ?, ?, ?, ?);");
             stmt.setString(1, new_usuario.getId_usuario());
             stmt.setString(2, new_usuario.getNombres());
             stmt.setString(3, new_usuario.getApellidos());
-            stmt.setNull(4, 0);
-            stmt.setDate(5, new java.sql.Date(new_usuario.getFecha_nac().getTime()));
-            stmt.setString(6, new_usuario.getCorreo_e());
-            stmt.setString(7, new_usuario.getUsername());
-            stmt.setString(8, new_usuario.getPassword());
+            stmt.setDate(4, new java.sql.Date(new_usuario.getFecha_nac().getTime()));
+            stmt.setString(5, new_usuario.getCorreo_e());
+            stmt.setString(6, new_usuario.getPassword());
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
-                System.out.println(rs.getString("result"));
                 return true;
             }
         }

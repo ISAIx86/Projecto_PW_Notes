@@ -1,4 +1,34 @@
-$(document).ready(function() {
+$(document).ready(function (){
+
+    var form_disabled = true;
+
+    $(document).on('click', '#BUTTOM-Editar', function() {
+        
+        if (form_disabled) {
+            validateEntry();
+            $('#txt_nombres').prop("disabled", false);
+            $('#txt_apellidos').prop("disabled", false);
+            $('#eml_correoe').prop("disabled", false);
+            $('#dt_fecnac').prop("disabled", false);
+            $('#psw_password').prop("disabled", false);
+            $('#psw_confpassword').prop("disabled", false);
+            $('#BUTTOM-Editar').text("Cerrar");
+            $('#BUTTOM-Guardar').show();
+            form_disabled = false;
+        }
+        else {
+            $('#txt_nombres').prop("disabled", true);
+            $('#txt_apellidos').prop("disabled", true);
+            $('#eml_correoe').prop("disabled", true);
+            $('#dt_fecnac').prop("disabled", true);
+            $('#psw_password').prop("disabled", true);
+            $('#psw_confpassword').prop("disabled", true);
+            $('#BUTTOM-Editar').text("Editar");
+            $('#BUTTOM-Guardar').hide();
+            form_disabled = true;
+        }
+        
+    });
 
     $('#txt_nombres').change(function() {
         let value = $(this).val();
@@ -21,17 +51,6 @@ $(document).ready(function() {
         }
         else if (!noNumbers(value)) {
             setCSSFor($(this)[0], 'error', 'Los apellidos no pueden contener números.');
-        }
-        else {
-            setCSSFor($(this)[0], 'success');
-        }
-        checkAllCorrect();
-    });
-
-    $('#txt_username').change(function() {
-        let value = $(this).val();
-        if(value === "") {
-            setCSSFor($(this)[0], 'normal');
         }
         else {
             setCSSFor($(this)[0], 'success');
@@ -103,19 +122,18 @@ $(document).ready(function() {
         checkAllCorrect();
     })
 
-    $('#form').submit(function(e){
+    $('#Formulario-Usuario').submit(function(e){
         e.preventDefault();
         if (checkInputs()) {
             $.ajax({
                 data: $(this).serialize(),
                 type: "POST",
                 dataType: "json",
-                url: "RegistrarUsuario"
+                url: "EditarPerfil"
             }).done(function(data){
                 if (data.resultado === true) {
                     alert(data.razon);
-                    emptyFields();
-                    window.location.replace("login_proto.html");
+                    window.location.replace("EditarPerfil");
                 }
                 else {
                     alert(data.razon);
@@ -128,21 +146,30 @@ $(document).ready(function() {
 
 });
 
+function validateEntry() {
+    $('#txt_nombres').trigger("change");
+    $('#txt_apellidos').trigger("change");
+    $('#eml_correoe').trigger("change");
+    $('#dt_fecnac').trigger("change");
+    $('#psw_password').trigger("change");
+    $('#psw_confpassword').trigger("change");
+}
+
 function checkAllCorrect() {
-    let divs = Array.from($('#form').children('div'));
+    let divs = Array.from($('#Formulario-Usuario').children('div'));
     for (let i = 0; i < divs.length - 1; i++) {
         if (divs[i].getAttribute("state") === "nv") {
             let input = divs[i].querySelector('input');
-            setCSSFor($('button[type=submit]')[0], 'error', "El campo " + input.getAttribute('name') + " está incorrecto");
+            setCSSFor($('#BUTTOM-Guardar')[0], 'error', "El campo " + input.getAttribute('name') + " está incorrecto");
             return false;
         }
     }
-    setCSSFor($('button[type=submit]')[0], 'normal');
+    setCSSFor($('#BUTTOM-Guardar')[0], 'normal');
     return true;
 }
 
 function checkNoEmpty() {
-    let divs = Array.from($('#form').children('div'));
+    let divs = Array.from($('#Formulario-Usuario').children('div'));
     let all_correct = true;
     for (let i = 0; i < divs.length - 1; i++) {
         if (divs[i].getAttribute('state') === "mt") {
@@ -151,7 +178,7 @@ function checkNoEmpty() {
             all_correct = false;
         }
     }
-    if (!all_correct) setCSSFor($('button[type=submit]')[0], 'error', "Hay campos vacíos, por favor complete la información");
+    if (!all_correct) setCSSFor($('#BUTTOM-Guardar')[0], 'error', "Hay campos vacíos, por favor complete la información");
     return all_correct;
 }
 
@@ -159,16 +186,4 @@ function checkInputs() {
     if (!checkNoEmpty()) return false;
     if (!checkAllCorrect()) return false;
     return true;
-}
-
-function emptyFields() {
-    $('#txt_nombres').val("");
-    $('#txt_apellidos').val("");
-    $('#txt_username').val("");
-    $('#nbr_dia').val("");
-    $('#slt_mes').val("");
-    $('#nbr_año').val("");
-    $('#eml_correoe').val("");
-    $('#psw_password').val("");
-    $('#psw_confpassword').val("");
 }

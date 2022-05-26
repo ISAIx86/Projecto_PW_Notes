@@ -56,7 +56,7 @@
 
             <section class="Perfil-Usario">
                 <div class="Contenido-Formulario">
-                    <ul class="Lista-de-datos"></ul>
+                    <ul class="Lista-de-datos">
                         <form class="DatosUsario" id="Formulario-Usuario">
                             <div class="form-label-group" state="sc">
                                 <h6>Nombre:</h6>
